@@ -1,0 +1,18 @@
+{% extends 'budget/base.html' %}
+
+{% block body %}
+
+<h1>Welcome to the DASHBOARD!</h1>
+<br>
+<h3>Recent Transactions:</h3>
+{% for transaction in transactions_list %}
+    <ul>
+        <li>{{ transaction.description }}</li>
+        <li>{{ transaction.label }}</li>
+        <li>${{ transaction.amount }}</li>
+        <li>{{ transaction.date }}</li>
+    </ul>
+
+{% endfor %}
+
+{% endblock %}

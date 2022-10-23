@@ -1,0 +1,21 @@
+{% extends 'budget/base.html' %}
+
+{% block body %}
+
+<h1>Welcome to the BUDGET PAGE!</h1>
+<br>
+<h3>Categories:</h3>
+{% for category in categories_list %}
+    <ul>
+        <li>{{ category.name }}, {{ category.type }}</li>
+    </ul>
+{% endfor %}
+<br>
+<h3>Labels:</h3>
+{% for label in labels_list %}
+    <ul>
+        <li>{{ label.name }}, {{ label.category }}, {{ label.amount_planned }}, {{ label.amount_received }}, {{ label.due_date }}, {{ label.notes }}</li>
+    </ul>
+{% endfor %}}
+
+{% endblock %}
