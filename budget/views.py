@@ -153,8 +153,15 @@ def delete_label(request, id):
 
 
 def reports(request):
-    template = loader.get_template('budget/reports.html')
-    context = {}
+    transactions_list = Transaction.objects.all()
+    categories_list = Category.objects.all()
+    labels_list = Label.objects.all()
+    template = loader.get_template('budget/dashboard.html')
+    context = {
+        'transactions_list': transactions_list,
+        'categories_list': categories_list,
+        'labels_list': labels_list
+    }
     return HttpResponse(template.render(context, request))
 
 
