@@ -1,0 +1,22 @@
+{% extends 'budget/base.html' %}
+
+{% block body %}
+    <div class="container-fluid hero-2">
+        <div class="container">
+            <div class="row height-45 align-items-center">
+                <div class="ml-5 pl-4">
+                    <h1>Login</h1>
+                    <br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button class="btn btn-secondary btn-green btn-custom-1 px-5" type="submit">Login</button>
+                    </form>
+                    <br>
+                    <h3 class="text-info">Don't have an account?</h3>
+                    <a href="{% url 'register' %}" class="btn btn-secondary btn-gray btn-custom-1 px-5">Create New Account</a>
+                </div>
+            </div>
+        </div>
+   </div>
+{% endblock %}

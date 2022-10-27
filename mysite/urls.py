@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 # from rest_framework import routers
 # from budget.views import CategoryViewSet, CatExpenseViewSet
+from users import views as user_views
+from budget import views as budget_views
+from django.contrib.auth import views as authentication_views
 
 # router = routers.DefaultRouter()
 # router.register('category-rest', CategoryViewSet)
@@ -26,7 +29,12 @@ from django.urls import path, include
 # router.register('EXPENSE', CatExpenseViewSet)
 
 urlpatterns = [
+    path('', budget_views.index, name="index"),
     path('admin/', admin.site.urls),
     path('budget/', include('budget.urls')),
+    path('register/', user_views.register, name='register'),
+    path('login/', authentication_views.LoginView.as_view(template_name="users/login.html"), name='login'),
+    path('logout/', authentication_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('profile/', user_views.profilepage, name='profile')
     # path('', include(router.urls))
 ]

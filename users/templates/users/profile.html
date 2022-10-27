@@ -1,0 +1,19 @@
+{% extends 'budget/base.html' %}
+
+{% block body %}
+    <div class="container-fluid hero-2">
+        <div class="container">
+            <div class="row height-45 align-items-center">
+                <div class="ml-5 pl-4">
+                    <h3>Welcome, {{ user.first_name }}</h3>
+                    <h1>User Profile Page</h1>
+                    <br>
+                    <p>username: {{ user.username }}</p>
+                    <p>first name: {{ user.first_name }}</p>
+                    <p>last name: {{ user.last_name }}</p>
+                    <p>email: {{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+   </div>
+{% endblock %}

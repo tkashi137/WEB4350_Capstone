@@ -2,7 +2,6 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path('', views.index, name="index"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('transactions/', views.transactions, name="transactions"),
     path('add-transaction/', views.create_transaction, name="create_transaction"),
@@ -15,5 +14,5 @@ urlpatterns = [
     path('add-label/', views.create_label, name="create_label"),
     path('update-label/<int:id>', views.update_label, name="update_label"),
     path('delete-label/<int:id>', views.delete_label, name="delete_label"),
-    path('reports/', views.reports, name="reports")
+    path('reports/', views.reports, name="reports"),
 ]
