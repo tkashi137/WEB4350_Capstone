@@ -1,3 +1,54 @@
-h1 {
-    color: #3875d7;
+.nav-pills .nav-link {
+  background: 0 0;
+  border: 0;
+  border-radius: 50rem;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #2f8886;
+}
+
+.nav-dashboard {
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' clip-rule='evenodd' fill-rule='evenodd' fill='%23fff' stroke-linejoin='round' stroke-miterlimit='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m11.3 13.7c0-.53-.47-1-1-1h-7.3c-.53 0-1 .47-1 1v5.3c0 .53.47 1 1 1h7.3c.53 0 1-.47 1-1zm10.7 0c0-.53-.47-1-1-1h-7.3c-.53 0-1 .47-1 1v5.3c0 .53.47 1 1 1h7.3c.53 0 1-.47 1-1zm-7.8.5h6.3v4.3h-6.3zm-10.7 0h6.3v4.3h-6.3zm18.5-9.2c0-.53-.47-1-1-1h-7.3c-.53 0-1 .47-1 1v5.3c0 .53.47 1 1 1h7.3c.53 0 1-.47 1-1zm-10.7 0c0-.53-.47-1-1-1h-7.3c-.53 0-1 .47-1 1v5.3c0 .53.47 1 1 1h7.3c.53 0 1-.47 1-1zm2.9.5h6.3v4.3h-6.3zm-10.7 0h6.3v4.3h-6.3z' fill-rule='nonzero' /%3E%3C/svg%3E");
+}
+
+.card {
+  border: none;
+}
+
+.expense-one {
+  background: #f59d2a;
+  clip-path: circle(50%);
+  height: 3em;
+  width: 3em;
+}
+
+.expense-two {
+  background: #2f8886;
+  clip-path: circle(50%);
+  height: 3em;
+  width: 3em;
+}
+
+.expense-three {
+  background: #a05195;
+  clip-path: circle(50%);
+  height: 3em;
+  width: 3em;
+}
+
+.expense-four {
+  background: #84c69b;
+  clip-path: circle(50%);
+  height: 3em;
+  width: 3em;
+}
+
+.expense-five {
+  background: #ee7738;
+  clip-path: circle(50%);
+  height: 3em;
+  width: 3em;
 }

@@ -1,43 +1,56 @@
 {% extends 'budget/base.html' %}
 
 {% block body %}
+<div class="col py-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-light">
+                <h1>Transactions</h1>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <a class="btn btn-success" href="{% url 'create_transaction' %}" role="button">Add Transaction</a>
+            <div class="col-md-12">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Label</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions_list %}
+                                <tr>
+                                    <th scope="row">{{ transaction.id }}</th>
+                                    <td>{{ transaction.label }}</td>
+                                    <td>{{ transaction.description }}</td>
+                                    <td>{{ transaction.date }}</td>
+                                    <td>${{ transaction.amount }}</td>
+                                    <td>
+                                        <a class="btn btn-secondary"
+                                            href="{% url 'update_transaction' transaction.id %}" role="button">Edit</a>
+                                        <a class="btn btn-danger" href="{% url 'delete_transaction' transaction.id %}"
+                                            role="button">Delete</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
 
-<h1>Welcome to the TRANSACTIONS PAGE!</h1>
-<br>
+                        {% for transaction in transactions_list %}
 
-<a class="btn btn-success" href="{% url 'create_transaction' %}" role="button">Add Transaction</a>
-
-<table class="table">
-  <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Label</th>
-        <th scope="col">Description</th>
-        <th scope="col">Date</th>
-        <th scope="col">Amount</th>
-        <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for transaction in transactions_list %}
-    <tr>
-        <th scope="row">{{ transaction.id }}</th>
-        <td>{{ transaction.label }}</td>
-        <td>{{ transaction.description }}</td>
-        <td>{{ transaction.date }}</td>
-        <td>${{ transaction.amount }}</td>
-        <td>
-            <a class="btn btn-secondary" href="{% url 'update_transaction' transaction.id %}" role="button">Edit</a>
-            <a class="btn btn-danger" href="{% url 'delete_transaction' transaction.id %}" role="button">Delete</a>
-        </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-
-
-{% for transaction in transactions_list %}
-
-{% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

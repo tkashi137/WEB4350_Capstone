@@ -1,18 +1,185 @@
 {% extends 'budget/base.html' %}
 
 {% block body %}
+<div class="col py-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-light">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <p class="card-text text-center">Chart Here</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <p class="card-text text-center">Chart Here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <p class="card-text text-center">Chart Here</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <p class="card-text text-center">Chart Here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <p class="card-text text-center">Chart Here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <p class="card-text text-center">Chart Here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block col-auto px-sm-2 px-0 bg-dark bg-opacity-25">
+    <div class="d-flex flex-column px-3 pt-2 text-white min-vh-100">
+        <div style="background-color: #2F8886" class="card text-white h-100">
+            <div class="card-body">
+                <p>Info Here</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <h2>Recent Transactions</h2>
+            {% comment %}
+            {% for transaction in transactions_list %}
+            <ul>
+                <li>{{ transaction.description }}</li>
+                <li>{{ transaction.label }}</li>
+                <li>${{ transaction.amount }}</li>
+                <li>{{ transaction.date }}</li>
+            </ul>
 
-<h1>Welcome to the DASHBOARD!</h1>
-<br>
-<h3>Recent Transactions:</h3>
-{% for transaction in transactions_list %}
-    <ul>
-        <li>{{ transaction.description }}</li>
-        <li>{{ transaction.label }}</li>
-        <li>${{ transaction.amount }}</li>
-        <li>{{ transaction.date }}</li>
-    </ul>
+            {% endfor %}{% endcomment %}
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <div class="expense-one">
+                </div>
+            </div>
+            <div class="col">
+                <p class="text-start">Category<br>
+                    Subcategory<br>
+                    mm/dd/yy</p>
+            </div>
+            <div class="col">
+                <p class="text-end">$0.00</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <div class="expense-two">
+                </div>
+            </div>
+            <div class="col">
+                <p class="text-start">Category<br>
+                    Subcategory<br>
+                    mm/dd/yy</p>
+            </div>
+            <div class="col">
+                <p class="text-end">$0.00</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <div class="expense-three">
+                </div>
+            </div>
+            <div class="col">
+                <p class="text-start">Category<br>
+                    Subcategory<br>
+                    mm/dd/yy</p>
+            </div>
+            <div class="col">
+                <p class="text-end">$0.00</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <div class="expense-four">
+                </div>
+            </div>
+            <div class="col">
+                <p class="text-start">Category<br>
+                    Subcategory<br>
+                    mm/dd/yy</p>
+            </div>
+            <div class="col">
+                <p class="text-end">$0.00</p>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <div class="expense-five">
+                </div>
+            </div>
+            <div class="col">
+                <p class="text-start">Category<br>
+                    Subcategory<br>
+                    mm/dd/yy</p>
+            </div>
+            <div class="col">
+                <p class="text-end">$0.00</p>
+            </div>
+        </div>
+        <div class="pb-4">
+            <h2>Budgets</h2>
+            <div class="row mt-2">
+                <div class="col">
+                    <p>Name<br>Category<br>Period</p>
+                </div>
+                <div class="col">
+                    <p class="text-end">$0.00</p>
+                </div>
 
-{% endfor %}
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <p>Name<br>Category<br>Period</p>
+                </div>
+                <div class="col">
+                    <p class="text-end">$0.00</p>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col">
+                    <p>Name<br>Category<br>Period</p>
+                </div>
+                <div class="col">
+                    <p class="text-end">$0.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
