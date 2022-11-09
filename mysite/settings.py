@@ -128,3 +128,6 @@ LOGIN_REDIRECT_URL = 'dashboard'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# if not logged in, redirect to login
+LOGIN_URL = 'login'
