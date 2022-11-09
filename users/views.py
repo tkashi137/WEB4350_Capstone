@@ -17,7 +17,7 @@ def register(request):
             form.save()
             name = form.cleaned_data.get('username')
             messages.success(request, f'Welcome {name}! You are logged in.')
-            return redirect('index')
+            return redirect('budget:dashboard')
     else:
         form = RegistrationForm()
     return render(request, 'users/register.html', {'form': form})
