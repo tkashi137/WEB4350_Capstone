@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -129,5 +130,11 @@ LOGIN_REDIRECT_URL = 'dashboard'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# if not logged in, redirect to login
+# if not logged in, redirect to login - Jami
 LOGIN_URL = 'login'
+
+#media root for profile pic - Jami
+MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
+
+#media path - Jami
+MEDIA_URL = '/pictures/'
