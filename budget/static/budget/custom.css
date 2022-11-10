@@ -52,3 +52,36 @@
   height: 3em;
   width: 3em;
 }
+
+H1, H2, H3, H4, H5, H6 {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+}
+
+p {
+  font-family: 'Sintony', sans-serif;
+  color: white;
+}
+
+label {
+  font-family: 'Sintony', sans-serif;
+  color: white;
+}
+
+tbody, td, tfoot, th, thead, tr {
+  font-family: 'Sintony', sans-serif;
+  color: white;
+  border-bottom-color: #84c69b;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+}
+
+ul {
+  font-family: 'Sintony', sans-serif;
+  color: white;
+}
+
+.helptext {
+  font-family: 'Sintony', sans-serif;
+  color: white;
+}
