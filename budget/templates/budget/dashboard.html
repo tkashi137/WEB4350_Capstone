@@ -60,7 +60,7 @@
         </div>
     </div>
 </div>
-<div class="d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block col-auto px-sm-2 px-0 bg-dark bg-opacity-25">
+{% comment %}<div class="d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block col-auto px-sm-2 px-0 bg-dark bg-opacity-25">
     <div class="d-flex flex-column px-3 pt-2 text-white min-vh-100">
         <div style="background-color: #2F8886" class="card text-white h-100">
             <div class="card-body">
@@ -69,8 +69,7 @@
         </div>
         <div class="row mt-2">
             <h2>Recent Transactions</h2>
-            {% comment %}
-            {% for transaction in transactions_list %}
+                        {% for transaction in transactions_list %}
             <ul>
                 <li>{{ transaction.description }}</li>
                 <li>{{ transaction.label }}</li>
@@ -78,7 +77,7 @@
                 <li>{{ transaction.date }}</li>
             </ul>
 
-            {% endfor %}{% endcomment %}
+            {% endfor %}
         </div>
         <div class="row mt-2">
             <div class="col">
@@ -180,6 +179,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>{% endcomment %}
 
 {% endblock %}
