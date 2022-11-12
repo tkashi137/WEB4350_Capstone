@@ -59,48 +59,47 @@
                             <p class="card-text text-center">Info Here</p>
                         </div>
                     </div>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start pt-2 text-white"
-                        id="sidenav">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start pt-2 text-white">
                         <li class="nav-item">
-                            <a href="{% url 'dashboard' %}" class="nav-link active">
-                                <i class="bi bi-grid"></i><span
+                            <a {% if request.resolver_match.url_name == 'dashboard' %}class="nav-link active"{% endif %} href="{% url 'dashboard' %}" class="nav-link">
+                                <i class="bi bi-grid text-white"></i><span
                                     class="ms-1 d-none d-sm-inline text-white">Dashboard</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'transactions' %}" class="nav-link">
+                            <a {% if request.resolver_match.url_name == 'transactions' %}class="nav-link active"{% endif %} href="{% url 'transactions' %}" class="nav-link">
                                 <i class="bi bi-credit-card-2-front text-white"></i><span
                                     class="ms-1 d-none d-sm-inline text-white">Transactions</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'budget' %}" class="nav-link">
+                            <a {% if request.resolver_match.url_name == 'budget' %}class="nav-link active"{% endif %} href="{% url 'budget' %}" class="nav-link">
                                 <i class="bi bi-pie-chart text-white"></i><span
                                     class="ms-1 d-none d-sm-inline text-white">Budgets</span>
                             </a>
                             </a>
                         </li>
                         <li>
-                            <a href="{% comment %}{% url 'category-form' %}{% endcomment %}" class="nav-link">
+                            <a {% if request.resolver_match.url_name == 'url' %}class="nav-link active"{% endif %} href="{% comment %}{% url 'category-form' %}{% endcomment %}" class="nav-link">
                                 <i class="bi bi-diagram-2 text-white"></i><span
                                     class="ms-1 d-none d-sm-inline text-white">Categories</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'reports' %}" class="nav-link">
+                            <a {% if request.resolver_match.url_name == 'reports' %}class="nav-link active"{% endif %} href="{% url 'reports' %}" class="nav-link">
                                 <i class="bi bi-graph-up-arrow text-white"></i> <span
                                     class="ms-1 d-none d-sm-inline text-white">Reports</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'profile' %}" class="nav-link">
+                            <a {% if request.resolver_match.url_name == 'profile' %}class="nav-link active"{% endif %} href="{% url 'profile' %}" class="nav-link">
                                 <i class="bi bi-person text-white"></i><span
                                     class="ms-1 d-none d-sm-inline text-white">User
                                     Profile</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% comment %}{% url 'settings' %}{% endcomment %}" class="nav-link">
+                            <a {% if request.resolver_match.url_name == 'url' %}class="nav-link active"{% endif %} href="{% comment %}{% url 'settings' %}{% endcomment %}" class="nav-link">
                                 <i class="bi bi-gear text-white"></i><span
                                     class="ms-1 d-none d-sm-inline text-white">Settings</span>
                             </a>
@@ -126,35 +125,33 @@
     <div class="d-flex justify-content-center py-3 d-block d-sm-block d-md-none">
         <ul class="nav fixed-bottom bg-dark bg-opacity-25 auto justify-content-center my-md-0 text-small">
             <li>
-                <a href="{% url 'dashboard' %}" class="nav-link text-white text-center" style="
-            border-bottom: #ee7738 4px solid;
-        ">
+                <a {% if request.resolver_match.url_name == 'dashboard' %}class="nav-link mobile-active text-white text-center"{% endif %} href="{% url 'dashboard' %}" class="nav-link text-white text-center">
                     <i class="bi bi-grid"></i><span class="text-white"><br>Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'transactions' %}" class="nav-link text-white text-center">
+                <a {% if request.resolver_match.url_name == 'transactions' %}class="nav-link mobile-active text-white text-center"{% endif %} href="{% url 'transactions' %}" class="nav-link text-white text-center">
                     <i class="bi bi-credit-card-2-front text-white"></i><span class="text-white"><br>Transactions</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'budget' %}" class="nav-link text-white text-center">
+                <a {% if request.resolver_match.url_name == 'budget' %}class="nav-link mobile-active text-white text-center"{% endif %} href="{% url 'budget' %}" class="nav-link text-white text-center">
                     <i class="bi bi-pie-chart text-white"></i><span class="text-white"><br>Budgets</span>
                 </a>
             </li>
             <li>
-                <a href="{% comment %}{% url 'category-form' %}{% endcomment %}"
+                <a {% if request.resolver_match.url_name == 'url' %}class="nav-link mobile-active text-white text-center"{% endif %} href="{% comment %}{% url 'category-form' %}{% endcomment %}"
                     class="nav-link text-white text-center">
                     <i class="bi bi-diagram-2 text-white"></i><span class="text-white"><br>Categories</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'reports' %}" class="nav-link text-white text-center">
+                <a {% if request.resolver_match.url_name == 'reports' %}class="nav-link mobile-active text-white text-center"{% endif %} href="{% url 'reports' %}" class="nav-link text-white text-center">
                     <i class="bi bi-graph-up-arrow text-white"></i> <span class="text-white"><br>Reports</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'profile' %}" class="nav-link text-white text-center">
+                <a {% if request.resolver_match.url_name == 'profile' %}class="nav-link mobile-active text-white text-center"{% endif %} href="{% url 'profile' %}" class="nav-link text-white text-center">
                     <i class="bi bi-person text-white"></i><span class="text-white"><br>User
                         Profile</span>
                 </a>
