@@ -85,3 +85,9 @@ ul {
   font-family: 'Sintony', sans-serif;
   color: white;
 }
+
+.profile-pic {
+  clip-path: circle(50%);
+  height: 8em;
+  width: 8em;
+}
