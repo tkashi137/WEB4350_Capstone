@@ -25,6 +25,18 @@
     border-bottom: #EE7738 4px solid;
 }
 
+.btn-home {
+  background-color: #2f8886;
+}
+
+.btn-home:hover {
+  background-color: #2a7a79;
+}
+
+.nav-link.nav-hover:hover {
+  background-color: #2f8886;
+}
+
 .card {
     border: none;
 }
