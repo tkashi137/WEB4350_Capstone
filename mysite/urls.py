@@ -42,7 +42,3 @@ urlpatterns = [
 
 
 
-#this is for images.  Will be different in production
-urlpatterns += [
-    # ... the rest of your URLconf goes here ...
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

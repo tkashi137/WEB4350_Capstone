@@ -120,6 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / "staticfiles"   # // is this needed?
 STATIC_URL = 'static/'
 
 #login redirect to budget
@@ -133,8 +134,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # if not logged in, redirect to login - Jami
 LOGIN_URL = 'login'
 
-#media root for profile pic - Jami
-MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
-
-#media path - Jami
-MEDIA_URL = '/pictures/'
