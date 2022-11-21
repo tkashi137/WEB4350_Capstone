@@ -4,17 +4,45 @@ from django.contrib.auth.models import User
 # Create your models here
 
 
+#added default categories for users
 class Category(models.Model):
+    CATEGORY_INCOME = "INCOME"
+    CATEGORY_EXPENSE = "EXPENSE"
+    DEFAULT_CATEGORIES = [
+        {"name": 'Housing', "type": CATEGORY_EXPENSE},
+        {"name": 'Food', "type": CATEGORY_EXPENSE},
+        {"name": 'Transportation', "type": CATEGORY_EXPENSE},
+        {"name": 'Health/Medical', "type": CATEGORY_EXPENSE},
+        {"name": 'Personal', "type": CATEGORY_EXPENSE},
+        {"name": 'Entertainment', "type": CATEGORY_EXPENSE},
+        {"name": 'Gifts', "type": CATEGORY_EXPENSE},
+        {"name": 'Other', "type": CATEGORY_EXPENSE},
+        {"name": 'Utilities', "type": CATEGORY_EXPENSE},
+        {"name": 'Debt', "type": CATEGORY_EXPENSE},
+        {"name": 'Savings', "type": CATEGORY_EXPENSE},
+        {"name": 'Other', "type": CATEGORY_INCOME},
+        {"name": 'Utilities', "type": CATEGORY_INCOME},
+        {"name": 'Debt', "type": CATEGORY_INCOME},
+        {"name": 'Savings', "type": CATEGORY_INCOME},
+    ]
+
     def __str__(self):
         return self.name
 
     name = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     CATEGORY_TYPE_CHOICES = [
-        ("INCOME", "Income"),
-        ("EXPENSE", "Expense")
+        (CATEGORY_INCOME, "Income"),
+        (CATEGORY_EXPENSE, "Expense")
     ]
-    type = models.CharField(max_length=8, choices=CATEGORY_TYPE_CHOICES, default="EXPENSE")
+
+    type = models.CharField(max_length=8, choices=CATEGORY_TYPE_CHOICES, default=CATEGORY_EXPENSE)
+
+    @staticmethod
+    def create_default_categories(user):
+        for category in Category.DEFAULT_CATEGORIES:
+            Category.objects.create(user=user, **category)
+
 
 
 class Label(models.Model):

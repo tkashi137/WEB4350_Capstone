@@ -6,6 +6,7 @@ from .forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.apps import apps
 
+from budget import models as budget_models # jami - for default categories
 
 # Create your views here.
 
@@ -14,7 +15,9 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save() # add user to form.save - jami
+            #To create default categories for user when registering - Jami
+            budget_models.Category.create_default_categories(user)
             name = form.cleaned_data.get('username')
             messages.success(request, f'Welcome {name}! You are logged in.')
             return redirect('dashboard')
