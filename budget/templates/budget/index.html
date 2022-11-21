@@ -1,20 +1,27 @@
-{% extends 'budget/base.html' %}
+{% extends 'budget/base2.html' %}
 
 {% block body %}
 
-    <div>
-        <h1>Welcome to the HOMEPAGE!</h1>
-        <li>
-            {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
-            {% else %}
-                <a href="{% url 'login' %}" class="nav-link">Login</a>
-            {% endif %}
-        </li>
+    <div class="container col-xxl-8 px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 pb-5">
+            <div class="col-10 col-sm-8 col-lg-6">
+                <img src="https://i.postimg.cc/d3mgGDW6/phone-mockup.png" class="d-block mx-lg-auto img-fluid"
+                     alt="Dashboard and Transactions page on mobile phone" width="700" height="500" loading="eager">
+            </div>
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold lh-1 mb-3">Easy Budget</h1>
+                <p>If you are looking for a simple and easy to use budget app, look no further than
+                    Easy Budget. This app is perfect for those who want to take control of their finances and get their
+                    spending under control. Easy Budget lets you track your income and expenses so you can see where
+                    your
+                    money is going and make adjustments to your budget accordingly. Get started today and take control
+                    of
+                    your finances!</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a href="{% url 'register' %}" class="btn btn-home btn-lg px-4 me-md-2 text-white">Join Today!</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
-
-
-
-
