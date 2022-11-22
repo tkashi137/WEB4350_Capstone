@@ -45,16 +45,30 @@ class Category(models.Model):
 
 
 
+#Label model
 class Label(models.Model):
+    DEFAULT_LABELS = [
+     #   {"name": 'Mortage Payment', "category": 'Category, Housing', "amount_planned": '1600.00', 
+     #   "amount_received": '', "due_date": '', "notes": 'notes'} 
+       
+    ]
+
     def __str__(self):
         return self.name
 
     name = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     amount_planned = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
     amount_received = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
     due_date = models.DateTimeField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
+
+
+    @staticmethod
+    def create_default_labels(user):
+        for label in Label.DEFAULT_LABELS:
+            Label.objects.create(user=user, **label)
 
 
 class Transaction(models.Model):

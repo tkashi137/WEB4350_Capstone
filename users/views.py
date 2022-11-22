@@ -18,6 +18,7 @@ def register(request):
             user = form.save() # add user to form.save - jami
             #To create default categories for user when registering - Jami
             budget_models.Category.create_default_categories(user)
+            budget_models.Label.create_default_labels(user)
             name = form.cleaned_data.get('username')
             messages.success(request, f'Welcome {name}! You are logged in.')
             return redirect('dashboard')
