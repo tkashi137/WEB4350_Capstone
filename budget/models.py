@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from decimal import Decimal
 
 # Create your models here
 
@@ -48,8 +49,8 @@ class Category(models.Model):
 #Label model
 class Label(models.Model):
     DEFAULT_LABELS = [
-     #   {"name": 'Mortage Payment', "category": 'Category, Housing', "amount_planned": '1600.00', 
-     #   "amount_received": '', "due_date": '', "notes": 'notes'} 
+        {"name": 'Mortage Payment', "category": 'Housing', "amount_planned": Decimal("1600.00"),
+        "amount_received": Decimal("0.0"), "due_date": None, "notes": 'notes'} 
        
     ]
 
@@ -68,7 +69,9 @@ class Label(models.Model):
     @staticmethod
     def create_default_labels(user):
         for label in Label.DEFAULT_LABELS:
-            Label.objects.create(user=user, **label)
+            category_name = label.pop("category")
+            category = Category.objects.get(name=category_name, user=user)
+            Label.objects.create(user=user, **label, category=category)
 
 
 class Transaction(models.Model):

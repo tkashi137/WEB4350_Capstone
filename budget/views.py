@@ -19,8 +19,9 @@ def index(request):
 
 def dashboard(request):
     transactions_list = Transaction.objects.all()
-    categories_list = Category.objects.all()
-    labels_list = Label.objects.all()
+    categories_list = Category.objects.filter(user=request.user)
+    print(categories_list)
+    labels_list = Label.objects.filter(user=request.user)
     template = loader.get_template('budget/dashboard.html')
     context = {
         'transactions_list': transactions_list,
