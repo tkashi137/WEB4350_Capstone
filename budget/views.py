@@ -18,14 +18,16 @@ def index(request):
 
 
 def dashboard(request):
+    user = request.user
     transactions_list = Transaction.objects.all()
-    categories_list = Category.objects.filter(user=request.user)
-    print(categories_list)
-    labels_list = Label.objects.filter(user=request.user)
+    categories_list = Category.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    category_names = list(Category.objects.values_list('name', flat=True))
+    print(category_names)
+    labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     template = loader.get_template('budget/dashboard.html')
     context = {
         'transactions_list': transactions_list,
-        'categories_list': categories_list,
+        'category_names': category_names,
         'labels_list': labels_list
     }
     return HttpResponse(template.render(context, request))

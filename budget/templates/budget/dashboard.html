@@ -1,6 +1,7 @@
 {% extends 'budget/base.html' %}
 
 {% block body %}
+{{ category_names|json_script:"category_names"}}
 <div class="col py-3">
     <div class="container-fluid">
         <div class="row">
@@ -13,17 +14,18 @@
                 <div class="card text-white bg-dark h-100 bg-opacity-25">
                     <div class="card-body">
                         <canvas id="myChart1"></canvas>
-                        {%block scripts%}
-                        <script>
+                        <script type="text/javascript">
+                        var categoryNames = JSON.parse(document.getElementById('category_names').textContent)
+                        console.log(categoryNames)
                         $(document).ready(function(){
                             var ctx = document.getElementById('myChart1').getContext('2d');
                             var myCategory = new Chart(ctx, {
                                 type: 'doughnut',
                                 data: {
-                                    labels: [{% for category in categories_list %}'{{category.name}}',{%endfor%}] //loop through queryset, 
+                                    labels: categoryNames,
                                     datasets: [{
                                         label: '# of users',
-                                        data: [{%for category in categories_list%}1,{%endfor%}],
+                                        data: categoryNames.map(category => 1),
                                         backgroundColor: [
                                             'rgba(255, 99, 132, 0.2)', 
                                             'rgba(54, 162, 235, 0.2)',
@@ -53,7 +55,6 @@
                     });
                         });
                     </script>
-                    {%endblock scripts%}
                     </div>
                 </div>
             </div>
