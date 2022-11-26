@@ -21,7 +21,7 @@ def dashboard(request):
     user = request.user
     transactions_list = Transaction.objects.all()
     categories_list = Category.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
-    category_names = list(Category.objects.values_list('name', flat=True))
+    category_names = list(categories_list.values_list('name', flat=True))
     print(category_names)
     labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     template = loader.get_template('budget/dashboard.html')
