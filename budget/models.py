@@ -21,11 +21,12 @@ class Category(models.Model):
         {"name": 'Utilities', "type": CATEGORY_EXPENSE},
         {"name": 'Debt', "type": CATEGORY_EXPENSE},
         {"name": 'Savings', "type": CATEGORY_EXPENSE},
-        {"name": 'Other', "type": CATEGORY_INCOME},
-        {"name": 'Utilities', "type": CATEGORY_INCOME},
-        {"name": 'Debt', "type": CATEGORY_INCOME},
-        {"name": 'Savings', "type": CATEGORY_INCOME},
-    ]
+        {"name": 'Paycheck', "type": CATEGORY_INCOME},
+        {"name": 'Bonus', "type": CATEGORY_INCOME},
+        {"name": 'Interest', "type": CATEGORY_INCOME},
+        {"name": 'Other', "type": CATEGORY_INCOME}, 
+    ]    
+
 
     def __str__(self):
         return self.name
@@ -49,9 +50,9 @@ class Category(models.Model):
 #Label model
 class Label(models.Model):
     DEFAULT_LABELS = [
-        {"name": 'Mortage Payment', "category": 'Housing', "amount_planned": Decimal("1600.00"),
-        "amount_received": Decimal("0.0"), "due_date": None, "notes": 'notes'} 
-       
+        {"name": 'Mortage Payment', "category": 'Housing', "amount_planned": Decimal("0.0"),
+        "amount_received": Decimal("0.0"), "due_date": None, "notes": 'enter notes here'}, 
+
     ]
 
     def __str__(self):
@@ -84,6 +85,7 @@ class Transaction(models.Model):
         ("EXPENSE", "Expense")
     ]
     type = models.CharField(max_length=8, choices=TRANSACTION_TYPE_CHOICES, default="EXPENSE")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     label = models.ForeignKey(Label, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=7, decimal_places=2)
     date = models.DateTimeField()
