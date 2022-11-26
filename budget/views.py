@@ -168,16 +168,30 @@ def delete_label(request, id):
 
 
 def reports(request):
+    user = request.user
+    categories_list = Category.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    category_names = list(categories_list.values_list('name', flat=True))
+    category_types = list(categories_list.values_list('type', flat=True))
+    labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    label_names = list(labels_list.values_list('name', flat=True))
+    label_amountRec = list(labels_list.values_list('amount_received', flat=True))
+    label_amountPlanned = list(labels_list.values_list('amount_planned', flat=True))
     transactions_list = Transaction.objects.all()
-    categories_list = Category.objects.all()
-    labels_list = Label.objects.all()
     template = loader.get_template('budget/reports.html')
     context = {
-        'transactions_list': transactions_list,
         'categories_list': categories_list,
-        'labels_list': labels_list
+        'category_names': category_names,
+        'category_types': category_types,
+        'labels_list': labels_list,
+        'label_names': label_names,
+        'label_amountRec': label_amountRec,
+        'label_amountPlanned': label_amountPlanned,
+        'transactions_list': transactions_list,
     }
+   
     return HttpResponse(template.render(context, request))
+
+
 
 
 
