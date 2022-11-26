@@ -41,6 +41,15 @@
     border: none;
 }
 
+.btn-transaction {
+    background-color: #EE7738;
+}
+
+
+.btn-transaction:hover {
+    background-color: #d66b32;
+}
+
 .expense-one {
     background: #f59d2a;
     clip-path: circle(50%);
