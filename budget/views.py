@@ -44,7 +44,8 @@ def dashboard(request):
 
 
 def transactions(request):
-    transactions_list = Transaction.objects.all()
+    user = request.user
+    transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Transaction.objects.all()
     template = loader.get_template('budget/transactions.html')
     context = {
         'transactions_list': transactions_list,
@@ -87,8 +88,9 @@ def delete_transaction(request, id):
 
 
 def budget(request):
-    categories_list = Category.objects.all()
-    labels_list = Label.objects.all()
+    user = request.user
+    categories_list = Category.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     template = loader.get_template('budget/budget.html')
     context = {
         'categories_list': categories_list,
