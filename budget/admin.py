@@ -8,5 +8,10 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'user']
     list_filter = ['name', 'user']
 
-admin.site.register(Label)
+@admin.register(Label)
+class LabelAdmin(admin.ModelAdmin):
+    list_display = ['name', 'user']
+    list_filter = ['name', 'user']
+
+
 admin.site.register(Transaction)

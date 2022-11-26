@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
+
 # from rest_framework import viewsets
 # from .serializers import CategorySerializer, LabelSerializer, TransactionSerializer
 from .models import Category, Label, Transaction
 from django.contrib.auth.decorators import login_required
 from .forms import CategoryForm, LabelForm, TransactionForm
+
 
 # Create your views here.
 
@@ -19,16 +21,24 @@ def index(request):
 
 def dashboard(request):
     user = request.user
-    transactions_list = Transaction.objects.all()
     categories_list = Category.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     category_names = list(categories_list.values_list('name', flat=True))
-    print(category_names)
+    category_types = list(categories_list.values_list('type', flat=True))
     labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    label_names = list(labels_list.values_list('name', flat=True))
+    label_amountRec = list(labels_list.values_list('amount_received', flat=True))
+    label_amountPlanned = list(labels_list.values_list('amount_planned', flat=True))
+    transactions_list = Transaction.objects.all()
     template = loader.get_template('budget/dashboard.html')
     context = {
-        'transactions_list': transactions_list,
+        'categories_list': categories_list,
         'category_names': category_names,
-        'labels_list': labels_list
+        'category_types': category_types,
+        'labels_list': labels_list,
+        'label_names': label_names,
+        'label_amountRec': label_amountRec,
+        'label_amountPlanned': label_amountPlanned,
+        'transactions_list': transactions_list,
     }
     return HttpResponse(template.render(context, request))
 
