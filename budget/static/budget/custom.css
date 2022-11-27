@@ -41,15 +41,6 @@
     border: none;
 }
 
-.btn-transaction {
-    background-color: #EE7738;
-}
-
-
-.btn-transaction:hover {
-    background-color: #d66b32;
-}
-
 .expense-one {
     background: #f59d2a;
     clip-path: circle(50%);
@@ -122,4 +113,167 @@ ul {
     clip-path: circle(50%);
     height: 8em;
     width: 8em;
+}
+
+.form-control {
+    background-color: #386780;
+    background-blend-mode: soft-light;
+    border-radius: 0;
+    color: white;
+    font-family: 'Sintony', sans-serif;
+    border: none;
+}
+
+.acc-head {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13pt;
+}
+
+.acc-body {
+    font-family: Nunito, sans-serif;
+    font-size: 11pt;
+    font-weight: lighter;
+}
+
+.acc-end {
+    border-bottom-color: #84c69b;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+
+.accordion-item {
+    background-color: #19313C;
+    color: white;
+}
+
+.accordion-button {
+    background-color: #386780;
+}
+
+.btn-primary {
+    background-color: #EE7738 !important;
+    border-color: #EE7738 !important;
+}
+
+
+.form-control {
+    background-color: #386780;
+    background-blend-mode: soft-light;
+    border-radius: 0;
+    color: white;
+    font-family: 'Sintony', sans-serif;
+    border: none;
+}
+
+.acc-head {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13pt;
+}
+
+.acc-body {
+    font-family: Nunito, sans-serif;
+    font-size: 11pt;
+    font-weight: lighter;
+}
+
+.acc-end {
+    border-bottom-color: #84c69b;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+
+.accordion-item {
+    background-color: #19313C;
+    color: white;
+}
+
+.accordion-button {
+    background-color: #386780;
+}
+
+.btn-primary {
+    background-color: #EE7738 !important;
+    border-color: #EE7738 !important;
+}
+
+
+.form-control {
+    background-color: #386780;
+    background-blend-mode: soft-light;
+    border-radius: 0;
+    color: white;
+    font-family: 'Sintony', sans-serif;
+    border: none;
+}
+
+.acc-head {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13pt;
+}
+
+.acc-body {
+    font-family: Nunito, sans-serif;
+    font-size: 11pt;
+    font-weight: lighter;
+}
+
+.acc-end {
+    border-bottom-color: #84c69b;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+
+.accordion-item {
+    background-color: #19313C;
+    color: white;
+}
+
+.accordion-button {
+    background-color: #386780;
+}
+
+.btn-primary {
+    background-color: #EE7738 !important;
+    border-color: #EE7738 !important;
+}
+
+
+.form-control {
+    background-color: #386780;
+    background-blend-mode: soft-light;
+    border-radius: 0;
+    color: white;
+    font-family: 'Sintony', sans-serif;
+    border: none;
+}
+
+.acc-head {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13pt;
+}
+
+.acc-body {
+    font-family: Nunito, sans-serif;
+    font-size: 11pt;
+    font-weight: lighter;
+}
+
+.acc-end {
+    border-bottom-color: #84c69b;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+
+.accordion-item {
+    background-color: #19313C;
+    color: white;
+}
+
+.accordion-button {
+    background-color: #386780;
+}
+
+.btn-primary {
+    background-color: #EE7738 !important;
+    border-color: #EE7738 !important;
 }

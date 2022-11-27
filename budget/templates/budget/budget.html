@@ -4,28 +4,126 @@
 <div class="col py-3">
     <div class="container-fluid">
         <div class="row">
-            <div class="text-light">
-                <h1>Budget</h1>
+            <div class="text-light col-9">
+                <h1>Budget Categories</h1>
+            </div>
+            <div class="col float-end">
+                <a class="btn btn-primary" href="{% url 'create_category' %}" role="button"><i class="bi bi-plus-circle text-white"></i> Add New Category</a>
             </div>
         </div>
         <div class="row mt-2">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card text-white bg-dark h-100 bg-opacity-25">
                     <div class="card-body">
-                        <h2>Categories:</h2>
-                        {% for category in categories_list %}
-                        <ul>
-                            <li>{{ category.name }}, {{ category.type }}</li>
-                        </ul>
-                        {% endfor %}
-                        <br>
-                        <h2>Labels:</h2>
-                        {% for label in labels_list %}
-                        <ul>
-                            <li>{{ label.name }}, {{ label.category }}, {{ label.amount_planned }},
-                                {{ label.amount_received }}, {{ label.due_date }}, {{ label.notes }}</li>
-                        </ul>
-                        {% endfor %}
+                        <h2>Expenses:</h2>
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                          {% for category in categories_list %}
+                              {% if category.type == "EXPENSE" %}
+                                  <div class="accordion-item my-2">
+                                    <h2 class="accordion-header" id="flush-heading{{category.id}}">
+                                      <button class="accordion-button collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{category.id}}" aria-expanded="false" aria-controls="flush-collapse{{category.id}}">
+                                        {{ category.name }}
+                                      </button>
+                                    </h2>
+                                    <div id="flush-collapse{{category.id}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{category.id}}" data-bs-parent="#accordionFlushExample">
+                                      <div class="accordion-body text-white">
+                                          <div class="container">
+                                              {% for label in category.labels.all %}
+                                                  <div class="row pt-2 pb-1">
+                                                      {% if label.due_date < current_time %}
+                                                        <i class="bi bi-clock-fill col-sm-1 text-danger"></i>
+                                                      {% elif label.amount_received > 0 %}
+                                                          <i class="bi bi-circle-half col-sm-1 text-info"></i>
+                                                      {% elif label.amount_planned == label.amount_received %}
+                                                          <i class="bi bi-check-circle-fill col-sm-1 text-success"></i>
+                                                      {% else %}
+                                                          <i class="bi bi-circle col-sm-1 text-white"></i>
+                                                      {% endif %}
+                                                      <div class="col">{{ label.name }}</div>
+                                                      <div class="col">
+                                                          <a class="text-white" href="{% url 'update_label' label.id %}" role="button"><i class="bi bi-pencil-square col-sm-4"></i></a>
+                                                      </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="acc-body">
+                                                        <div class="col mx-4 px-3">Planned: ${{ label.amount_planned }}</div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="acc-body">
+                                                        <div class="col mx-4 px-3">Received: ${{ label.amount_received }}</div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="acc-body acc-end pb-2">
+                                                        <div class="col mx-4 px-3">Due: {{ label.due_date }}</div>
+                                                    </div>
+                                                  </div>
+                                              {% endfor %}
+                                            <div class="mt-2">
+                                                <a class="btn btn-outline-light" href="{% url 'create_label' %}" role="button"><i class="bi bi-plus-circle text-white"></i> Add {{ category.name }} Label</a>
+                                            </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <h2>Income:</h2>
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                          {% for category in categories_list %}
+                              {% if category.type == "INCOME" %}
+                                  <div class="accordion-item my-2">
+                                    <h2 class="accordion-header" id="flush-heading{{category.id}}">
+                                      <button class="accordion-button collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{category.id}}" aria-expanded="false" aria-controls="flush-collapse{{category.id}}">
+                                        {{ category.name }}
+                                      </button>
+                                    </h2>
+                                    <div id="flush-collapse{{category.id}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{category.id}}" data-bs-parent="#accordionFlushExample">
+                                      <div class="accordion-body text-white">
+                                          <div class="container">
+                                              {% for label in category.labels.all %}
+                                                  <div class="row pt-2 pb-1">
+                                                      {% if label.amount_received > 0 %}
+                                                          <i class="bi bi-circle-half col-sm-1 text-info"></i>
+                                                      {% elif label.amount_planned == label.amount_received %}
+                                                          <i class="bi bi-check-circle-fill col-sm-1 text-success"></i>
+                                                      {% else %}
+                                                          <i class="bi bi-circle col-sm-1 text-white"></i>
+                                                      {% endif %}
+                                                      <div class="col">{{ label.name }}</div>
+                                                      <div class="col">
+                                                          <a class="text-white" href="{% url 'update_label' label.id %}" role="button"><i class="bi bi-pencil-square col-sm-4"></i></a>
+                                                      </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="acc-body">
+                                                        <div class="col mx-4 px-3">Planned: ${{ label.amount_planned }}</div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="acc-body acc-end pb-2">
+                                                        <div class="col mx-4 px-3">Received: ${{ label.amount_received }}</div>
+                                                    </div>
+                                                  </div>
+                                              {% endfor %}
+                                            <div class="mt-2">
+                                                <a class="btn btn-outline-light" href="{% url 'create_label' %}" role="button"><i class="bi bi-plus-circle text-white"></i> Add {{ category.name }} Label</a>
+                                            </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
