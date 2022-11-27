@@ -26,6 +26,7 @@ def dashboard(request):
     category_types = list(categories_list.values_list('type', flat=True))
     labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     label_names = list(labels_list.values_list('name', flat=True))
+    label_category = list(labels_list.values_list('category', flat=True))
     label_amountRec = list(labels_list.values_list('amount_received', flat=True))
     label_amountPlanned = list(labels_list.values_list('amount_planned', flat=True))
     transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
@@ -42,6 +43,7 @@ def dashboard(request):
         'category_types': category_types,
         'labels_list': labels_list,
         'label_names': label_names,
+        'label_category': label_category,
         'label_amountRec': label_amountRec,
         'label_amountPlanned': label_amountPlanned,
         'transactions_list': transactions_list,

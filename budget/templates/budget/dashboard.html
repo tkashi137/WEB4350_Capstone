@@ -4,6 +4,7 @@
 {{ category_names|json_script:"category_names"}}
 {{ category_types|json_script:"category_types"}}
 {{ label_names|json_script:"label_names"}}
+{{ label_category|json_script:"label_category"}}
 {{ label_amountRec|json_script:"label_amountRec"}}
 {{ label_amountPlanned|json_script:"label_amountPlanned"}}
 {{ transaction_description|json_script:"transaction_description"}}
@@ -29,7 +30,6 @@
                         <canvas id="myChart1"></canvas>
                         <script type="text/javascript">
                         var categoryNames = JSON.parse(document.getElementById('category_names').textContent)
-                        console.log(categoryNames)
                         $(document).ready(function(){
                             var ctx = document.getElementById('myChart1').getContext('2d');
                             var myCategory = new Chart(ctx, {
@@ -93,8 +93,6 @@
                         <canvas id="myChart2"></canvas>
                         <script type="text/javascript">
                         var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
-                        console.log(categoryTypes)
-
                         $(document).ready(function(){
                             var ctx = document.getElementById('myChart2').getContext('2d');
                             var myCategory = new Chart(ctx, {
@@ -157,41 +155,46 @@
             <div class="col-md-6">
                 <div class="card text-white bg-dark h-100 bg-opacity-25">
                     <div class="card-body">
-                        <p>amount planned for each label/subcategory</p>
+                        <p>Amount planned & received for each label/subcategory</p>
                         <canvas id="myChart3"></canvas>
                         <script type="text/javascript">
                         var labelNames = JSON.parse(document.getElementById('label_names').textContent)
-                        console.log(labelNames)
                         var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
-                        console.log(labelAmountRec)
                         var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
-                        console.log(labelAmountPlanned)
                         var amountremaining = labelAmountPlanned - labelAmountRec
-                        console.log(amountremaining)
                         $(document).ready(function(){
                             var ctx = document.getElementById('myChart3').getContext('2d');
                             var myLabel = new Chart(ctx, {
-                                type: 'bar',
+                                type: 'line',
                                 data: {
                                     labels: labelNames,
                                     datasets: [
                                     {
-                                    label: 'amount planned',
-                                    backgroundColor: "#3e95cd",
-                                    data: labelAmountPlanned
+                                        label: 'amount planned',
+                                        data: labelAmountPlanned,
+                                        fill: false,
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        tension: 0.1
                                     }, 
                                     {
-                                    label: 'amount received',
-                                    backgroundColor: "#8e5ea2",
-                                    data: labelAmountRec,
+                                        label: 'amount received',
+                                        data: labelAmountRec,
+                                        fill: false,
+                                        borderColor: "#8e5ea2",
+                                        tension: 0.1
                                     },
                                    ]
                                 },
                                 options: {
                                     scales: {
+                                      
                                         y: {
                                             beginAtZero: true
-                                        }
+                                        },
+                                        x: {
+                                            
+                                        },
+                                       
                                     }
                                 }
                     });
@@ -207,15 +210,10 @@
                         <canvas id="myChart4"></canvas>
                         <script type="text/javascript">
                         var transactionDescription = JSON.parse(document.getElementById('transaction_description').textContent)
-                        console.log(transactionDescription)
                         var transactionType = JSON.parse(document.getElementById('transaction_type').textContent)
-                        console.log(transactionType)
                         var transactionLabel = JSON.parse(document.getElementById('transaction_label').textContent)
-                        console.log(transactionLabel)
                         var transactionAmount = JSON.parse(document.getElementById('transaction_amount').textContent)
-                        console.log(transactionAmount)
                         var transactionDate= JSON.parse(document.getElementById('transaction_date').textContent)
-                        console.log(transactionDate)
                         $(document).ready(function(){
                             var ctx = document.getElementById('myChart4').getContext('2d');
                             var myLabel = new Chart(ctx, {
@@ -260,7 +258,10 @@
                                     scales: {
                                         y: {
                                             beginAtZero: true
-                                        }
+                                        },
+                                        x: {
+                                            
+                                        },
                                     }
                                 }
                     });
@@ -274,23 +275,19 @@
             <div class="col-md-6">
                 <div class="card text-white bg-dark h-100 bg-opacity-25">
                     <div class="card-body">
-                        <p>amount REMAINING for each subcategory</p>
+                        <p>amount planned and remaining for each category</p>
                         <canvas id="myChart5"></canvas>
                         <script type="text/javascript">
                         var labelNames = JSON.parse(document.getElementById('label_names').textContent)
-                        console.log(labelNames)
                         var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
-                        console.log(labelAmountRec)
                         var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
-                        console.log(labelAmountPlanned)
-                        var amountremaining = labelAmountPlanned - labelAmountRec
-                        console.log(amountremaining)
+                        var labelCategory = JSON.parse(document.getElementById('label_category').textContent)
                         $(document).ready(function(){
                             var ctx = document.getElementById('myChart5').getContext('2d');
                             var myLabel = new Chart(ctx, {
                                 type: 'bar',
                                 data: {
-                                    labels: labelNames,
+                                    labels: categoryNames,
                                     datasets: [{
                                         label: 'amount remaining',
                                         data: amountremaining, 
@@ -331,10 +328,7 @@
                                             beginAtZero: true
                                         }
                                     }
-                                    xAxes: [{
-                                        ticks: {
-                                            autoSkip: true,
-                                            maxTicksLimit: 5,
+                                
                                     
                                 }
                     });
