@@ -13,5 +13,9 @@ class LabelAdmin(admin.ModelAdmin):
     list_display = ['name', 'user']
     list_filter = ['name', 'user']
 
+@admin.register(Transaction)
+class LabelAdmin(admin.ModelAdmin):
+    list_display = ['description', 'user']
+    list_filter = ['description', 'user']
 
-admin.site.register(Transaction)
+

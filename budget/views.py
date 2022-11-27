@@ -28,7 +28,13 @@ def dashboard(request):
     label_names = list(labels_list.values_list('name', flat=True))
     label_amountRec = list(labels_list.values_list('amount_received', flat=True))
     label_amountPlanned = list(labels_list.values_list('amount_planned', flat=True))
-    transactions_list = Transaction.objects.all()
+    transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    transaction_description = list(transactions_list.values_list('description', flat=True))
+    transaction_type = list(transactions_list.values_list('type', flat=True))
+    transaction_label = list(transactions_list.values_list('label', flat=True))
+    transaction_amount = list(transactions_list.values_list('amount', flat=True))
+    transaction_date = list(transactions_list.values_list('date', flat=True))
+    
     template = loader.get_template('budget/dashboard.html')
     context = {
         'categories_list': categories_list,
@@ -39,6 +45,11 @@ def dashboard(request):
         'label_amountRec': label_amountRec,
         'label_amountPlanned': label_amountPlanned,
         'transactions_list': transactions_list,
+        'transaction_description': transaction_description,
+        'transaction_type': transaction_type,
+        'transaction_label': transaction_label,
+        'transaction_amount': transaction_amount,
+        'transaction_date': transaction_date,
     }
     return HttpResponse(template.render(context, request))
 
