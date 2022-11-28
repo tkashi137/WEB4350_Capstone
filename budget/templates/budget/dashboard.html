@@ -31,6 +31,8 @@
                         <script type="text/javascript">
                         var categoryNames = JSON.parse(document.getElementById('category_names').textContent)
                         $(document).ready(function(){
+                            Chart.defaults.global.defaultFontColor = '#FFF';
+
                             var ctx = document.getElementById('myChart1').getContext('2d');
                             var myCategory = new Chart(ctx, {
                                 type: 'doughnut',
