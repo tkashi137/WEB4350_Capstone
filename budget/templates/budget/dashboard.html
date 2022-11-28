@@ -24,7 +24,7 @@
                 <div class="col-md-6">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
-                            <p>Your Categories</p>
+                            <h2 class="fs-5 text-center">Categories</h2>
                             <canvas id="myChart1"></canvas>
                             <script type="text/javascript">
                                 var categoryNames = JSON.parse(document.getElementById('category_names').textContent)
@@ -38,32 +38,27 @@
                                                 label: 'category names',
                                                 data: categoryNames.map(category => 1),
                                                 backgroundColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
+                                                    '#1abc9c',
+                                                    '#16a085',
+                                                    '#2ecc71',
+                                                    '#27ae60',
+                                                    '#3498db',
+                                                    '#2980b9',
+                                                    '#9b59b6',
+                                                    '#8e44ad',
+                                                    '#f1c40f',
+                                                    '#f39c12',
+                                                    '#e67e22',
+                                                    '#d35400',
+                                                    '#e74c3c',
+                                                    '#c0392b',
+                                                    '#ecf0f1',
+                                                    '#bdc3c7',
+                                                    '#95a5a6',
+                                                    '#7f8c8d',
                                                 ],
                                                 borderColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
+                                                    '#fff',
                                                 ],
                                                 borderWidth: 1
                                             }]
@@ -87,7 +82,7 @@
                 <div class="col-md-6">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
-                            <p>Your Category Types</p>
+                            <h2 class="fs-5 text-center">Category Types</h2>
                             <canvas id="myChart2"></canvas>
                             <script type="text/javascript">
                                 var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
@@ -101,33 +96,27 @@
                                                 label: 'Category Types',
                                                 data: categoryTypes.map(category => 1),
                                                 backgroundColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
+                                                    '#1abc9c',
+                                                    '#16a085',
+                                                    '#2ecc71',
+                                                    '#27ae60',
+                                                    '#3498db',
+                                                    '#2980b9',
+                                                    '#9b59b6',
+                                                    '#8e44ad',
+                                                    '#f1c40f',
+                                                    '#f39c12',
+                                                    '#e67e22',
+                                                    '#d35400',
+                                                    '#e74c3c',
+                                                    '#c0392b',
+                                                    '#ecf0f1',
+                                                    '#bdc3c7',
+                                                    '#95a5a6',
+                                                    '#7f8c8d',
                                                 ],
-
                                                 borderColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
+                                                    '#fff',
                                                 ],
                                                 borderWidth: 1
                                             }]
@@ -153,7 +142,7 @@
                 <div class="col-md-6">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
-                            <p>Amount planned & received for each label/subcategory</p>
+                            <h2 class="fs-5 text-center">Amount Planned and Received</h2>
                             <canvas id="myChart3"></canvas>
                             <script type="text/javascript">
                                 var labelNames = JSON.parse(document.getElementById('label_names').textContent)
@@ -171,14 +160,14 @@
                                                     label: 'amount planned',
                                                     data: labelAmountPlanned,
                                                     fill: false,
-                                                    borderColor: 'rgb(75, 192, 192)',
+                                                    backgroundColor: '#1abc9c',
                                                     tension: 0.1
                                                 },
                                                 {
                                                     label: 'amount received',
                                                     data: labelAmountRec,
                                                     fill: false,
-                                                    borderColor: "#8e5ea2",
+                                                    backgroundColor: '#9b59b6',
                                                     tension: 0.1
                                                 },
                                             ]
@@ -202,7 +191,7 @@
                 <div class="col-md-6">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
-                            <p>transaction graph</p>
+                            <h2 class="fs-5 text-center">Transactions</h2>
                             <canvas id="myChart4"></canvas>
                             <script type="text/javascript">
                                 var transactionDescription = JSON.parse(document.getElementById('transaction_description').textContent)
@@ -223,34 +212,25 @@
                                                     label: 'amount received',
                                                     data: transactionAmount,
                                                     backgroundColor: [
-                                                        'rgba(255, 99, 132, 1)',
-                                                        'rgba(54, 162, 235, 1)',
-                                                        'rgba(255, 206, 86, 1)',
-                                                        'rgba(75, 192, 192, 1)',
-                                                        'rgba(153, 102, 255, 1)',
-                                                        'rgba(255, 159, 64, 1)',
-                                                        'rgba(255, 99, 132, 1)',
-                                                        'rgba(54, 162, 235, 1)',
-                                                        'rgba(255, 206, 86, 1)',
-                                                        'rgba(75, 192, 192, 1)',
-                                                        'rgba(153, 102, 255, 1)',
-                                                        'rgba(255, 159, 64, 1)',
+                                                        '#1abc9c',
+                                                        '#16a085',
+                                                        '#2ecc71',
+                                                        '#27ae60',
+                                                        '#3498db',
+                                                        '#2980b9',
+                                                        '#9b59b6',
+                                                        '#8e44ad',
+                                                        '#f1c40f',
+                                                        '#f39c12',
+                                                        '#e67e22',
+                                                        '#d35400',
+                                                        '#e74c3c',
+                                                        '#c0392b',
+                                                        '#ecf0f1',
+                                                        '#bdc3c7',
+                                                        '#95a5a6',
+                                                        '#7f8c8d',
                                                     ],
-                                                    borderColor: [
-                                                        'rgba(255, 99, 132, 1)',
-                                                        'rgba(54, 162, 235, 1)',
-                                                        'rgba(255, 206, 86, 1)',
-                                                        'rgba(75, 192, 192, 1)',
-                                                        'rgba(153, 102, 255, 1)',
-                                                        'rgba(255, 159, 64, 1)',
-                                                        'rgba(255, 99, 132, 1)',
-                                                        'rgba(54, 162, 235, 1)',
-                                                        'rgba(255, 206, 86, 1)',
-                                                        'rgba(75, 192, 192, 1)',
-                                                        'rgba(153, 102, 255, 1)',
-                                                        'rgba(255, 159, 64, 1)',
-                                                    ],
-                                                    borderWidth: 1
                                                 }]
                                         },
                                         options: {
@@ -272,7 +252,7 @@
                 <div class="col-md-12">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
-                            <p>amount planned and remaining for each category</p>
+                            <h2 class="fs-5 text-center">Category Amount Planned and Remaining</h2>
                             <canvas id="myChart5"></canvas>
                             <script type="text/javascript">
                                 var labelNames = JSON.parse(document.getElementById('label_names').textContent)
@@ -289,34 +269,25 @@
                                                 label: 'amount remaining',
                                                 data: amountremaining,
                                                 backgroundColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
+                                                    '#1abc9c',
+                                                    '#16a085',
+                                                    '#2ecc71',
+                                                    '#27ae60',
+                                                    '#3498db',
+                                                    '#2980b9',
+                                                    '#9b59b6',
+                                                    '#8e44ad',
+                                                    '#f1c40f',
+                                                    '#f39c12',
+                                                    '#e67e22',
+                                                    '#d35400',
+                                                    '#e74c3c',
+                                                    '#c0392b',
+                                                    '#ecf0f1',
+                                                    '#bdc3c7',
+                                                    '#95a5a6',
+                                                    '#7f8c8d',
                                                 ],
-                                                borderColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)',
-                                                ],
-                                                borderWidth: 1
                                             }]
                                         },
                                         options: {
