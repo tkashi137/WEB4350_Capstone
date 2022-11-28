@@ -1,22 +1,23 @@
 {% extends 'budget/base.html' %}
 
 {% block body %}
-<div class="col py-3">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="text-light">
-                <h1>Transactions</h1>
+    <div class="col py-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="text-light col-9">
+                    <h1>Transactions</h1>
+                </div>
+                <div class="col float-end">
+                    <a class="btn btn-primary text-white" href="{% url 'create_transaction' %}" role="button"><i
+                            class="bi bi-plus-circle text-white"></i> Add Transaction</a>
+                </div>
             </div>
-        </div>
-        <div class="row mt-2">
-        <div class="col-md-3 pb-2">
-            <a class="btn btn-success" href="{% url 'create_transaction' %}" role="button"><i class="bi bi-plus-circle text-white"></i> Add Transaction</a>
-        </div>
             <div class="col-md-12">
                 <div class="card text-white bg-dark h-100 bg-opacity-25">
                     <div class="card-body">
-                        <table class="table">
-                            <thead>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Type</th>
@@ -26,26 +27,29 @@
                                     <th scope="col">Amount</th>
                                     <th></th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 {% for transaction in transactions_list %}
-                                <tr>
-                                    <th scope="row">{{ transaction.id }}</th>
-                                    <th scope="row">{{ transaction.type }}</th>
-                                    <td>{{ transaction.label }}</td>
-                                    <td>{{ transaction.description }}</td>
-                                    <td>{{ transaction.date }}</td>
-                                    <td>${{ transaction.amount }}</td>
-                                    <td>
-                                        <a class="btn btn-secondary"
-                                            href="{% url 'update_transaction' transaction.id %}" role="button">Edit</a>
-                                        <a class="btn btn-danger" href="{% url 'delete_transaction' transaction.id %}"
-                                            role="button">Delete</a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <th scope="row">{{ transaction.id }}</th>
+                                        <th scope="row">{{ transaction.type }}</th>
+                                        <td>{{ transaction.label }}</td>
+                                        <td>{{ transaction.description }}</td>
+                                        <td>{{ transaction.date }}</td>
+                                        <td>${{ transaction.amount }}</td>
+                                        <td>
+                                            <a class="btn btn-secondary"
+                                               href="{% url 'update_transaction' transaction.id %}"
+                                               role="button">Edit</a>
+                                            <a class="btn btn-danger"
+                                               href="{% url 'delete_transaction' transaction.id %}"
+                                               role="button">Delete</a>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
 
                         {% for transaction in transactions_list %}
 
@@ -55,6 +59,5 @@
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}
