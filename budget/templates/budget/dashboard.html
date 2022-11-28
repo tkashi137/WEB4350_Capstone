@@ -213,14 +213,17 @@
                         var transactionType = JSON.parse(document.getElementById('transaction_type').textContent)
                         var transactionLabel = JSON.parse(document.getElementById('transaction_label').textContent)
                         var transactionAmount = JSON.parse(document.getElementById('transaction_amount').textContent)
+                        console.log(transactionAmount)
                         var transactionDate= JSON.parse(document.getElementById('transaction_date').textContent)
+                        console.log(transactionDate)
                         $(document).ready(function(){
                             var ctx = document.getElementById('myChart4').getContext('2d');
                             var myLabel = new Chart(ctx, {
                                 type: 'bar',
                                 data: {
                                     labels: transactionDate,
-                                    datasets: [{
+                                    datasets: [
+                                    {
                                         label: 'amount received',
                                         data: transactionAmount, 
                                         backgroundColor: [
@@ -259,9 +262,7 @@
                                         y: {
                                             beginAtZero: true
                                         },
-                                        x: {
-                                            
-                                        },
+                                       
                                     }
                                 }
                     });
