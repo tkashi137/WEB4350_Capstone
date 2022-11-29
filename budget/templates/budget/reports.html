@@ -1,11 +1,17 @@
 {% extends 'budget/base.html' %}
 
 {% block body %}
-{{ category_names|json_script:"category_names"}}
-{{ category_types|json_script:"category_types"}}
-{{ label_names|json_script:"label_names"}}
-{{ label_amountRec|json_script:"label_amountRec"}}
-{{ label_amountPlanned|json_script:"label_amountPlanned"}}
+{{ category_names|json_script:"category_names" }}
+{{ category_types|json_script:"category_types" }}
+{{ label_names|json_script:"label_names" }}
+{{ label_category|json_script:"label_category" }}
+{{ label_amountRec|json_script:"label_amountRec" }}
+{{ label_amountPlanned|json_script:"label_amountPlanned" }}
+{{ transaction_description|json_script:"transaction_description" }}
+{{ transaction_type|json_script:"transaction_type" }}
+{{ transaction_label|json_script:"transaction_label" }}
+{{ transaction_amount|json_script:"transaction_amount" }}
+{{ transaction_date|json_script:"transaction_date" }}
 
     <div class="col py-3">
         <div class="container-fluid">
@@ -40,143 +46,127 @@
                             </ul>
                             <div class="tab-content" id="reportsTabContent">
                                 <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel"
-                                     aria-labelledby="overview-tab" tabindex="0">Budget Overview charts here
+                                     aria-labelledby="overview-tab" tabindex="0">Budget Overview charts here - under construction!!
                                      <div class="row mt-2">
                                         <div class="col-md-6">
                                             <div class="card text-white bg-dark h-100 bg-opacity-25">
                                                 <div class="card-body">
-                                                    <p>amount planned for each label/subcategory</p>
-                                                    <canvas id="myChart3"></canvas>
+                                                    <h2 class="fs-5 text-center">Categories</h2>
+                                                    <canvas id="myChart1"></canvas>
                                                     <script type="text/javascript">
-                                                    var labelNames = JSON.parse(document.getElementById('label_names').textContent)
-                                                    console.log(labelNames)
-                                                    var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
-                                                    console.log(labelAmountRec)
-                                                    var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
-                                                    console.log(labelAmountPlanned)
-                                                    var amountremaining = labelAmountPlanned - labelAmountRec
-                                                    console.log(amountremaining)
-                                                    $(document).ready(function(){
-                                                        var ctx = document.getElementById('myChart3').getContext('2d');
-                                                        var myLabel = new Chart(ctx, {
-                                                            type: 'bar',
-                                                            data: {
-                                                                labels: labelNames,
-                                                                datasets: [{
-                                                                    label: 'amount planned',
-                                                                    data: labelAmountPlanned, 
-                                                                    backgroundColor: [
-                                                                        'rgba(255, 99, 132, 0.2)', 
-                                                                        'rgba(54, 162, 235, 0.2)',
-                                                                        'rgba(255, 206, 86, 0.2)',
-                                                                        'rgba(75, 192, 192, 0.2)',
-                                                                        'rgba(153, 102, 255, 0.2)',
-                                                                        'rgba(255, 159, 64, 0.2)',
-                                                                        'rgba(255, 99, 132, 0.2)', 
-                                                                        'rgba(54, 162, 235, 0.2)',
-                                                                        'rgba(255, 206, 86, 0.2)',
-                                                                        'rgba(75, 192, 192, 0.2)',
-                                                                        'rgba(153, 102, 255, 0.2)',
-                                                                        'rgba(255, 159, 64, 0.2)',
-                                                                    ],
-                                                                    borderColor: [
-                                                                        'rgba(255, 99, 132, 1)',
-                                                                        'rgba(54, 162, 235, 1)',
-                                                                        'rgba(255, 206, 86, 1)',
-                                                                        'rgba(75, 192, 192, 1)',
-                                                                        'rgba(153, 102, 255, 1)',
-                                                                        'rgba(255, 159, 64, 1)',
-                                                                        'rgba(255, 99, 132, 1)',
-                                                                        'rgba(54, 162, 235, 1)',
-                                                                        'rgba(255, 206, 86, 1)',
-                                                                        'rgba(75, 192, 192, 1)',
-                                                                        'rgba(153, 102, 255, 1)',
-                                                                        'rgba(255, 159, 64, 1)',
-                                                                    ],
-                                                                    borderWidth: 1
-                                                                }]
-                                                            },
-                                                            options: {
-                                                                scales: {
-                                                                    y: {
-                                                                        beginAtZero: true
-                                                                    }
+                                                        var categoryNames = JSON.parse(document.getElementById('category_names').textContent)
+                                                        $(document).ready(function () {
+                                                            var ctx = document.getElementById('myChart1').getContext('2d');
+                                                            var myCategory = new Chart(ctx, {
+                                                                type: 'doughnut',
+                                                                data: {
+                                                                    labels: categoryNames,
+                                                                    datasets: [{
+                                                                        label: 'category names',
+                                                                        data: categoryNames.map(category => 1),
+                                                                        backgroundColor: [
+                                                                            '#1abc9c',
+                                                                            '#16a085',
+                                                                            '#2ecc71',
+                                                                            '#27ae60',
+                                                                            '#3498db',
+                                                                            '#2980b9',
+                                                                            '#9b59b6',
+                                                                            '#8e44ad',
+                                                                            '#f1c40f',
+                                                                            '#f39c12',
+                                                                            '#e67e22',
+                                                                            '#d35400',
+                                                                            '#e74c3c',
+                                                                            '#c0392b',
+                                                                            '#ecf0f1',
+                                                                            '#bdc3c7',
+                                                                            '#95a5a6',
+                                                                            '#7f8c8d',
+                                                                        ],
+                                                                        borderColor: [
+                                                                            '#fff',
+                                                                        ],
+                                                                        borderWidth: 1
+                                                                    }]
+                                                                },
+                                                                options: {
+                                                                    legend: {
+                                                                        display: false,
+                                                                    },
+                                                                    scales: {
+                                                                        y: {
+                                                                            beginAtZero: true
+                                                                        }
+                                                                    },
                                                                 }
-                                                            }
-                                                });
-                                                    });
-                                                </script>
+                                                            });
+                                                        });
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="card text-white bg-dark h-100 bg-opacity-25">
                                                 <div class="card-body">
-                                                    <p>amount received for each label/subcategory</p>
-                                                    <canvas id="myChart4"></canvas>
+                                                    <h2 class="fs-5 text-center">Category Types</h2>
+                                                    <canvas id="myChart2"></canvas>
                                                     <script type="text/javascript">
-                                                    var labelNames = JSON.parse(document.getElementById('label_names').textContent)
-                                                    console.log(labelNames)
-                                                    var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
-                                                    console.log(labelAmountRec)
-                                                    var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
-                                                    console.log(labelAmountPlanned)
-                                                    var amountremaining = labelAmountPlanned - labelAmountRec
-                                                    console.log(amountremaining)
-                                                    $(document).ready(function(){
-                                                        var ctx = document.getElementById('myChart4').getContext('2d');
-                                                        var myLabel = new Chart(ctx, {
-                                                            type: 'bar',
-                                                            data: {
-                                                                labels: labelNames,
-                                                                datasets: [{
-                                                                    label: 'amount received',
-                                                                    data: labelAmountRec, 
-                                                                    backgroundColor: [
-                                                                        'rgba(255, 99, 132, 0.2)', 
-                                                                        'rgba(54, 162, 235, 0.2)',
-                                                                        'rgba(255, 206, 86, 0.2)',
-                                                                        'rgba(75, 192, 192, 0.2)',
-                                                                        'rgba(153, 102, 255, 0.2)',
-                                                                        'rgba(255, 159, 64, 0.2)',
-                                                                        'rgba(255, 99, 132, 0.2)', 
-                                                                        'rgba(54, 162, 235, 0.2)',
-                                                                        'rgba(255, 206, 86, 0.2)',
-                                                                        'rgba(75, 192, 192, 0.2)',
-                                                                        'rgba(153, 102, 255, 0.2)',
-                                                                        'rgba(255, 159, 64, 0.2)',
-                                                                    ],
-                                                                    borderColor: [
-                                                                        'rgba(255, 99, 132, 1)',
-                                                                        'rgba(54, 162, 235, 1)',
-                                                                        'rgba(255, 206, 86, 1)',
-                                                                        'rgba(75, 192, 192, 1)',
-                                                                        'rgba(153, 102, 255, 1)',
-                                                                        'rgba(255, 159, 64, 1)',
-                                                                        'rgba(255, 99, 132, 1)',
-                                                                        'rgba(54, 162, 235, 1)',
-                                                                        'rgba(255, 206, 86, 1)',
-                                                                        'rgba(75, 192, 192, 1)',
-                                                                        'rgba(153, 102, 255, 1)',
-                                                                        'rgba(255, 159, 64, 1)',
-                                                                    ],
-                                                                    borderWidth: 1
-                                                                }]
-                                                            },
-                                                            options: {
-                                                                scales: {
-                                                                    y: {
-                                                                        beginAtZero: true
-                                                                    }
+                                                        var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
+                                                        $(document).ready(function () {
+                                                            var ctx = document.getElementById('myChart2').getContext('2d');
+                                                            var myCategory = new Chart(ctx, {
+                                                                type: 'doughnut',
+                                                                data: {
+                                                                    labels: categoryTypes,
+                                                                    datasets: [{
+                                                                        label: 'Category Types',
+                                                                        data: categoryTypes.map(category => 1),
+                                                                        backgroundColor: [
+                                                                            '#1abc9c',
+                                                                            '#16a085',
+                                                                            '#2ecc71',
+                                                                            '#27ae60',
+                                                                            '#3498db',
+                                                                            '#2980b9',
+                                                                            '#9b59b6',
+                                                                            '#8e44ad',
+                                                                            '#f1c40f',
+                                                                            '#f39c12',
+                                                                            '#e67e22',
+                                                                            '#d35400',
+                                                                            '#e74c3c',
+                                                                            '#c0392b',
+                                                                            '#ecf0f1',
+                                                                            '#bdc3c7',
+                                                                            '#95a5a6',
+                                                                            '#7f8c8d',
+                                                                        ],
+                                                                        borderColor: [
+                                                                            '#fff',
+                                                                        ],
+                                                                        borderWidth: 1
+                                                                    }]
+                                                                },
+                                                                options: {
+                                                                    legend: {
+                                                                        display: false,
+                                                                    },
+                                                                    scales: {
+                                                                        y: {
+                                                                            beginAtZero: true
+                                                                        }
+                                                                    },
                                                                 }
-                                                            }
-                                                });
-                                                    });
-                                                </script>
+                                                            });
+                                                        });
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                     
+                                        
                                 </div>
                                 <div class="tab-pane fade" id="monthly-tab-pane" role="tabpanel"
                                      aria-labelledby="monthly-tab" tabindex="0">Monthly Spending charts here
@@ -254,61 +244,61 @@
                                                     <p>Your Category Types</p>
                                                     <canvas id="myChart2"></canvas>
                                                     <script type="text/javascript">
-                                                    var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
-                                                    console.log(categoryTypes)
-                                                    $(document).ready(function(){
-                                                        var ctx = document.getElementById('myChart2').getContext('2d');
-                                                        var myCategory = new Chart(ctx, {
-                                                            type: 'doughnut',
-                                                            data: {
-                                                                labels: categoryTypes,
-                                                                datasets: [{
-                                                                    label: 'Category Types',
-                                                                    data: categoryTypes.map(category => 1),
-                                                                    backgroundColor: [
-                                                                        'rgba(255, 99, 132, 0.2)', 
-                                                                        'rgba(54, 162, 235, 0.2)',
-                                                                        'rgba(255, 206, 86, 0.2)',
-                                                                        'rgba(75, 192, 192, 0.2)',
-                                                                        'rgba(153, 102, 255, 0.2)',
-                                                                        'rgba(255, 159, 64, 0.2)',
-                                                                        'rgba(255, 99, 132, 0.2)', 
-                                                                        'rgba(54, 162, 235, 0.2)',
-                                                                        'rgba(255, 206, 86, 0.2)',
-                                                                        'rgba(75, 192, 192, 0.2)',
-                                                                        'rgba(153, 102, 255, 0.2)',
-                                                                        'rgba(255, 159, 64, 0.2)',
-                                                                    ],
-                                                                    
-                                                                    borderColor: [
-                                                                        'rgba(255, 99, 132, 1)',
-                                                                        'rgba(54, 162, 235, 1)',
-                                                                        'rgba(255, 206, 86, 1)',
-                                                                        'rgba(75, 192, 192, 1)',
-                                                                        'rgba(153, 102, 255, 1)',
-                                                                        'rgba(255, 159, 64, 1)',
-                                                                        'rgba(255, 99, 132, 1)',
-                                                                        'rgba(54, 162, 235, 1)',
-                                                                        'rgba(255, 206, 86, 1)',
-                                                                        'rgba(75, 192, 192, 1)',
-                                                                        'rgba(153, 102, 255, 1)',
-                                                                        'rgba(255, 159, 64, 1)',
-                                                                    ],
-                                                                    borderWidth: 1
-                                                                }]
-                                                            },
-                                                            options: {
-                                                                legend: {
-                                                                    display: false,
+                                                        var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
+                                                        console.log(categoryTypes)
+                                                        $(document).ready(function(){
+                                                            var ctx = document.getElementById('myChart2').getContext('2d');
+                                                            var myCategory = new Chart(ctx, {
+                                                                type: 'doughnut',
+                                                                data: {
+                                                                    labels: categoryTypes,
+                                                                    datasets: [{
+                                                                        label: 'Category Types',
+                                                                        data: categoryTypes.map(category => 1),
+                                                                        backgroundColor: [
+                                                                            'rgba(255, 99, 132, 0.2)', 
+                                                                            'rgba(54, 162, 235, 0.2)',
+                                                                            'rgba(255, 206, 86, 0.2)',
+                                                                            'rgba(75, 192, 192, 0.2)',
+                                                                            'rgba(153, 102, 255, 0.2)',
+                                                                            'rgba(255, 159, 64, 0.2)',
+                                                                            'rgba(255, 99, 132, 0.2)', 
+                                                                            'rgba(54, 162, 235, 0.2)',
+                                                                            'rgba(255, 206, 86, 0.2)',
+                                                                            'rgba(75, 192, 192, 0.2)',
+                                                                            'rgba(153, 102, 255, 0.2)',
+                                                                            'rgba(255, 159, 64, 0.2)',
+                                                                        ],
+                                                                        
+                                                                        borderColor: [
+                                                                            'rgba(255, 99, 132, 1)',
+                                                                            'rgba(54, 162, 235, 1)',
+                                                                            'rgba(255, 206, 86, 1)',
+                                                                            'rgba(75, 192, 192, 1)',
+                                                                            'rgba(153, 102, 255, 1)',
+                                                                            'rgba(255, 159, 64, 1)',
+                                                                            'rgba(255, 99, 132, 1)',
+                                                                            'rgba(54, 162, 235, 1)',
+                                                                            'rgba(255, 206, 86, 1)',
+                                                                            'rgba(75, 192, 192, 1)',
+                                                                            'rgba(153, 102, 255, 1)',
+                                                                            'rgba(255, 159, 64, 1)',
+                                                                        ],
+                                                                        borderWidth: 1
+                                                                    }]
                                                                 },
-                                                                scales: {
-                                                                    y: {
-                                                                        beginAtZero: true
-                                                                    }
-                                                                },
-                                                            }            
-                                                });
+                                                                options: {
+                                                                    legend: {
+                                                                        display: false,
+                                                                    },
+                                                                    scales: {
+                                                                        y: {
+                                                                            beginAtZero: true
+                                                                        }
+                                                                    },
+                                                                }            
                                                     });
+                                                        });
                                                       </script>
                                                 </div>
                                             </div>
