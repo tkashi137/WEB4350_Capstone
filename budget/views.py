@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
+from django.db.models import Sum 
 from datetime import date
 
 # from rest_framework import viewsets
@@ -36,6 +37,17 @@ def dashboard(request):
     transaction_label = list(transactions_list.values_list('label', flat=True))
     transaction_amount = list(transactions_list.values_list('amount', flat=True))
     transaction_date = list(transactions_list.values_list('date', flat=True))
+
+    labels = Label.objects.filter(user=user)
+    sums = [] # maybe you just need a list of all the sums, depends on what the graph library wants
+    sumLabels = []
+    for category in Category.objects.filter(user=user):
+        cat_sum = labels.filter(category=category).aggregate(Sum('amount_planned'))
+        #sums[category.name] = cat_sum
+        sums.append(cat_sum)
+        sumLabels.append(category.name)
+        #put in context, load in, pass to graph
+
     template = loader.get_template('budget/dashboard.html')
     context = {
         'categories_list': categories_list,
@@ -52,6 +64,9 @@ def dashboard(request):
         'transaction_label': transaction_label,
         'transaction_amount': transaction_amount,
         'transaction_date': transaction_date,
+        'cat_sum': cat_sum,
+        'sums': sums,
+        'sumLabels': sumLabels,
 
     }
     return HttpResponse(template.render(context, request))
@@ -186,14 +201,37 @@ def delete_label(request, id):
 
 
 def reports(request):
-    transactions_list = Transaction.objects.all()
-    categories_list = Category.objects.all()
-    labels_list = Label.objects.all()
+    user = request.user
+    categories_list = Category.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    category_names = list(categories_list.values_list('name', flat=True))
+    category_types = list(categories_list.values_list('type', flat=True))
+    labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    label_names = list(labels_list.values_list('name', flat=True))
+    label_category = list(labels_list.values_list('category', flat=True))
+    label_amountRec = list(labels_list.values_list('amount_received', flat=True))
+    label_amountPlanned = list(labels_list.values_list('amount_planned', flat=True))
+    transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
+    transaction_description = list(transactions_list.values_list('description', flat=True))
+    transaction_type = list(transactions_list.values_list('type', flat=True))
+    transaction_label = list(transactions_list.values_list('label', flat=True))
+    transaction_amount = list(transactions_list.values_list('amount', flat=True))
+    transaction_date = list(transactions_list.values_list('date', flat=True))
     template = loader.get_template('budget/reports.html')
     context = {
-        'transactions_list': transactions_list,
         'categories_list': categories_list,
-        'labels_list': labels_list
+        'category_names': category_names,
+        'category_types': category_types,
+        'labels_list': labels_list,
+        'label_names': label_names,
+        'label_category': label_category,
+        'label_amountRec': label_amountRec,
+        'label_amountPlanned': label_amountPlanned,
+        'transactions_list': transactions_list,
+        'transaction_description': transaction_description,
+        'transaction_type': transaction_type,
+        'transaction_label': transaction_label,
+        'transaction_amount': transaction_amount,
+        'transaction_date': transaction_date,
     }
     return HttpResponse(template.render(context, request))
 
