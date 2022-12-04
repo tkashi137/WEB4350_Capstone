@@ -64,9 +64,9 @@ def dashboard(request):
         'transaction_label': transaction_label,
         'transaction_amount': transaction_amount,
         'transaction_date': transaction_date,
-        'cat_sum': cat_sum,
-        'sums': sums,
-        'sumLabels': sumLabels,
+       # 'cat_sum': cat_sum,
+       # 'sums': sums,
+       # 'sumLabels': sumLabels,
 
     }
     return HttpResponse(template.render(context, request))
