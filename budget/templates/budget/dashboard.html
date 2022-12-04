@@ -286,29 +286,29 @@
                                 var myLabel = new Chart(ctx, {
                                     type: 'bar',
                                     data: {
-                                        labels: categoryNames,
+                                        labels: labelSumLabels,
                                         datasets: [
                                         {
                                             label: 'amount planned',
                                             data: labelSums,
                                             fill: false,
-                                            borderColor: '#1abc9c',
+                                            borderColor: '#7f8c8d',
                                             tension: 0.1
                                         }, 
-                                        {
+                                        {% comment %} {
                                             label: 'amount received',
                                             data: labelSums,
                                             fill: false,
                                             borderColor: '#e67e22',
                                             tension: 0.1
-                                        },
-                                        {
+                                        }, {% endcomment %}
+                                        {% comment %} {
                                             label: 'amount remaining',
                                             data: amountremaining,
                                             fill: false,
                                             borderColor: 'rgba(75, 192, 192, 1)',
                                             tension: 0.1
-                                        },
+                                        }, {% endcomment %}
                                        ]
                                         
                                     },

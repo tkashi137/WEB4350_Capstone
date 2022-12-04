@@ -75,8 +75,8 @@ def dashboard(request):
 @login_required
 def transactions(request):
     user = request.user
-    transactions_list = Transaction.objects.all()
-    #transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Transaction.objects.all()
+    #transactions_list = Transaction.objects.all()
+    transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Transaction.objects.all()
     template = loader.get_template('budget/transactions.html')
     context = {
         'transactions_list': transactions_list,

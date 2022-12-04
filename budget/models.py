@@ -95,7 +95,7 @@ class Label(models.Model):
         "amount_received": Decimal("0.0"), "due_date": None, "notes": 'enter notes here'},
         {"name": 'Side Gig', "category": 'Paycheck', "amount_planned": Decimal("0.0"),
         "amount_received": Decimal("0.0"), "due_date": None, "notes": 'enter notes here'},
-        {"name": 'Bonus', "category": 'Bonus', "amount_Interestplanned": Decimal("0.0"),
+        {"name": 'Bonus', "category": 'Bonus', "amount_planned": Decimal("0.0"),
         "amount_received": Decimal("0.0"), "due_date": None, "notes": 'enter notes here'},
         {"name": 'Interest', "category": 'Interest', "amount_planned": Decimal("0.0"),
         "amount_received": Decimal("0.0"), "due_date": None, "notes": 'enter notes here'},
@@ -129,15 +129,36 @@ class Label(models.Model):
 
 class Transaction(models.Model):
     def __str__(self):
-        return "%s %s" % (self.description, self.date)
+        return self.description
+       # return "%s %s" % (self.description, self.date)
+    TRANSACTION_INCOME = "INCOME"
+    TRANSACTION_EXPENSE = "EXPENSE"
+    DEFAULT_TRANSACTIONS = [
+        {"description": "Smith's", "type": TRANSACTION_EXPENSE, "label": "Grocery","amount": Decimal("80.00"), "date": None},
+    ]
 
     description = models.TextField(blank=True, null=True)
-    TRANSACTION_TYPE_CHOICES = [
-        ("INCOME", "Income"),
-        ("EXPENSE", "Expense")
-    ]
-    type = models.CharField(max_length=8, choices=TRANSACTION_TYPE_CHOICES, default="EXPENSE")
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    TRANSACTION_TYPE_CHOICES = [
+        (TRANSACTION_INCOME, "Income"),
+        (TRANSACTION_EXPENSE, "Expense")
+    ]
+
+    type = models.CharField(max_length=8, choices=TRANSACTION_TYPE_CHOICES, default=TRANSACTION_EXPENSE)
+    
     label = models.ForeignKey(Label, related_name='transactions', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=7, decimal_places=2)
-    date = models.DateTimeField()
+    date = models.DateTimeField(blank=True, null=True)
+
+    @staticmethod
+    def create_default_transactions(user):
+        for transaction in Transaction.DEFAULT_TRANSACTIONS:
+            label_name = transaction.pop("label")
+            try:
+                label = Label.objects.get(name=label_name, user=user)
+                Transaction.objects.create(user=user, **transaction, label=label)
+
+            except Exception as e:
+                print(f'transaction creation failed for {user} & {label_name}')
+                traceback.print_exc()
+
