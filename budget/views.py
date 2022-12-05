@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
@@ -28,7 +30,8 @@ def dashboard(request):
     user = request.user
     categories_list = Category.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     category_names = list(categories_list.values_list('name', flat=True))
-    category_types = list(categories_list.values_list('type', flat=True))
+    category_types = [x[0] for x in Category.CATEGORY_TYPE_CHOICES]
+    # list(categories_list.values_list('type', flat=True))
     labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     label_names = list(labels_list.values_list('name', flat=True))
     label_category = list(labels_list.values_list('category', flat=True))
@@ -56,14 +59,28 @@ def dashboard(request):
     for category in Category.objects.filter(user=user):
         if (category.type == "Income"):
             numIncome += 1
+    """
+    categories_by_type = Category.objects.filter(user=user).values_list('type', flat=True)
+    print('first', categories_by_type)
+    categories_by_type = categories_by_type.annotate(type_sum=Sum('type'))
+    print(categories_by_type.query)
+    print(categories_by_type)
+    categories_by_type = list(categories_by_type)
     #create an array for to hold two values?  num of income and num of expenses? 
     #send array to chart
+    """
+    categories = Category.objects.filter(user=user)
+    category_type_sum = OrderedDict()
+    for category in categories:
+        if category.type not in category_type_sum:
+            category_type_sum[category.type] = 0
+        category_type_sum[category.type] += 1
 
     template = loader.get_template('budget/dashboard.html')
     context = {
         'categories_list': categories_list,
         'category_names': category_names,
-        'category_types': category_types,
+        'category_types': list(category_type_sum.keys()),
         'labels_list': labels_list,
         'label_names': label_names,
         'label_category': label_category,
@@ -78,7 +95,7 @@ def dashboard(request):
        # 'cat_sum': cat_sum,
         'sums': sums,
         'sumLabels': sumLabels,
-        'numIncome': numIncome,
+        'numIncome': list(category_type_sum.values()),
 
     }
     return HttpResponse(template.render(context, request))
@@ -95,23 +112,15 @@ def transactions(request):
     }
     return HttpResponse(template.render(context, request))
 
-# class TransactionClassView(ListView):
-    
-#     transactions_list = Transaction.objects.all()
-#     model = Transaction
-#     template_name = 'budget/transactions.html' 
-#     context_object_name: 'transactions_list'
+# @login_required
+# def create_transaction(request):
+#     form = TransactionForm(request.POST or None)
 
+#     if form.is_valid():
+#         form.save()
+#         return redirect('/budget/transactions')
 
-@login_required
-def create_transaction(request):
-    form = TransactionForm(request.POST or None)
-
-    if form.is_valid():
-        form.save()
-        return redirect('/budget/transactions')
-
-    return render(request, 'budget/transaction-form.html', {'form': form})
+#     return render(request, 'budget/transaction-form.html', {'form': form})
 
 #class based form
 class CreateTransaction(CreateView):
@@ -123,9 +132,6 @@ class CreateTransaction(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-
-
-
 
 
 @login_required
@@ -166,15 +172,27 @@ def budget(request):
     return HttpResponse(template.render(context, request))
 
 
-@login_required
-def create_category(request):
-    form = CategoryForm(request.POST or None)
+# @login_required
+# def create_category(request):
+#     form = CategoryForm(request.POST or None)
 
-    if form.is_valid():
-        form.save()
-        return redirect('/budget/budget')
+#     if form.is_valid():
+#         form.save()
+#         return redirect('/budget/budget')
 
-    return render(request, 'budget/category-form.html', {'form': form})
+#     return render(request, 'budget/category-form.html', {'form': form})
+
+#classed based create category view
+class CreateCategory(CreateView):
+    model = Category
+    fields = ['name', 'type']
+    template_name = 'budget/category-form.html'
+    success_url = reverse_lazy("budget")
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
 
 @login_required
@@ -200,15 +218,25 @@ def delete_category(request, id):
     return render(request, 'budget/category-delete.html', {'category': category})
 
 
-@login_required
-def create_label(request):
-    form = LabelForm(request.POST or None)
+# @login_required
+# def create_label(request):
+#     form = LabelForm(request.POST or None)
 
-    if form.is_valid():
-        form.save()
-        return redirect('/budget/budget')
+#     if form.is_valid():
+#         form.save()
+#         return redirect('/budget/budget')
 
-    return render(request, 'budget/label-form.html', {'form': form})
+#     return render(request, 'budget/label-form.html', {'form': form})
+
+class CreateLabel(CreateView):
+    model = Label
+    fields = ['name', 'category', 'amount_planned', 'amount_received', 'due_date', 'notes']
+    template_name = "budget/label-form.html"
+    success_url = reverse_lazy("budget")
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 @login_required
