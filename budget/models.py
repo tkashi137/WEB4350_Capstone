@@ -3,6 +3,7 @@ import traceback
 from django.db import models
 from django.contrib.auth.models import User
 from decimal import Decimal
+from django.urls import reverse
 
 # Create your models here
 
@@ -161,4 +162,11 @@ class Transaction(models.Model):
             except Exception as e:
                 print(f'transaction creation failed for {user} & {label_name}')
                 traceback.print_exc()
+
+    
+
+    def get_absolute_url(self):
+        return reverse("transactions", kwargs={"pk": self.pk})
+    
+    
 

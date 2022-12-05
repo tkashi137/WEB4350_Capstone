@@ -15,6 +15,7 @@
     {{ cat_sum|json_script:"cat_sum"}}
     {{ sums|json_script:"sums"}}
     {{ sumLabels|json_script:"sumLabels"}}
+    {{ numIncome|json_script:"numIncome"}}
 
     <div class="col py-3">
         <div class="container-fluid">
@@ -89,6 +90,8 @@
                             <canvas id="myChart2"></canvas>
                             <script type="text/javascript">
                                 var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
+                                var numIncome = JSON.parse(document.getElementById('numIncome').textContent)
+                                console.log(numIncome)
                                 $(document).ready(function () {
                                     var ctx = document.getElementById('myChart2').getContext('2d');
                                     var myCategory = new Chart(ctx, {
@@ -97,26 +100,10 @@
                                             labels: categoryTypes,
                                             datasets: [{
                                                 label: 'Category Types',
-                                                data: categoryTypes.map(category => 1),
+                                                data: numIncome,
                                                 backgroundColor: [
                                                     '#1abc9c',
                                                     '#16a085',
-                                                    '#2ecc71',
-                                                    '#27ae60',
-                                                    '#3498db',
-                                                    '#2980b9',
-                                                    '#9b59b6',
-                                                    '#8e44ad',
-                                                    '#f1c40f',
-                                                    '#f39c12',
-                                                    '#e67e22',
-                                                    '#d35400',
-                                                    '#e74c3c',
-                                                    '#c0392b',
-                                                    '#ecf0f1',
-                                                    '#bdc3c7',
-                                                    '#95a5a6',
-                                                    '#7f8c8d',
                                                 ],
                                                 borderColor: [
                                                     '#fff',
@@ -192,8 +179,9 @@
                                                 y: {
                                                     beginAtZero: true
                                                 },
-                                                x: {},
+                                                x: {
 
+                                                },
                                             }
                                         }
                                     });
@@ -220,7 +208,7 @@
                                     var myLabel = new Chart(ctx, {
                                         type: 'bar',
                                         data: {
-                                            labels: transactionDate,
+                                            labels: transactionDescription,
                                             datasets: [
                                                 {
                                                     label: 'amount received',
@@ -252,7 +240,11 @@
                                                 y: {
                                                     beginAtZero: true
                                                 },
-
+                                                x: {
+                                                    ticks: {
+                                                        maxTicksLimit: 2
+                                                    }
+                                                },
                                             }
                                         }
                                     });
@@ -291,8 +283,16 @@
                                         {
                                             label: 'amount planned',
                                             data: labelSums,
-                                            fill: false,
-                                            borderColor: '#7f8c8d',
+                                            fill: true,
+                                            backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)',
+                                            'rgba(255, 205, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(201, 203, 207, 0.2)'
+                                          ],
                                             tension: 0.1
                                         }, 
                                         {% comment %} {
