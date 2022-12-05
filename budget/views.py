@@ -10,6 +10,9 @@ from datetime import date
 from .models import Category, Label, Transaction
 from django.contrib.auth.decorators import login_required
 from .forms import CategoryForm, LabelForm, TransactionForm
+from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -35,7 +38,7 @@ def dashboard(request):
     transaction_description = list(transactions_list.values_list('description', flat=True))
     transaction_type = list(transactions_list.values_list('type', flat=True))
     transaction_label = list(transactions_list.values_list('label', flat=True))
-    transaction_amount = list(transactions_list.values_list('amount', flat=True))
+    transaction_amount = list (transactions_list.values_list('amount', flat=True))
     transaction_date = list(transactions_list.values_list('date', flat=True))
 
     labels = Label.objects.filter(user=user)
@@ -47,6 +50,14 @@ def dashboard(request):
         sums.append(cat_sum)
         sumLabels.append(category.name)
         #put in context, load in, pass to graph
+
+    numExpense = 0
+    numIncome = 0
+    for category in Category.objects.filter(user=user):
+        if (category.type == "Income"):
+            numIncome += 1
+    #create an array for to hold two values?  num of income and num of expenses? 
+    #send array to chart
 
     template = loader.get_template('budget/dashboard.html')
     context = {
@@ -64,9 +75,10 @@ def dashboard(request):
         'transaction_label': transaction_label,
         'transaction_amount': transaction_amount,
         'transaction_date': transaction_date,
-        'cat_sum': cat_sum,
+       # 'cat_sum': cat_sum,
         'sums': sums,
         'sumLabels': sumLabels,
+        'numIncome': numIncome,
 
     }
     return HttpResponse(template.render(context, request))
@@ -75,13 +87,20 @@ def dashboard(request):
 @login_required
 def transactions(request):
     user = request.user
-    transactions_list = Transaction.objects.all()
-    #transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Transaction.objects.all()
+    #transactions_list = Transaction.objects.all()
+    transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Transaction.objects.all()
     template = loader.get_template('budget/transactions.html')
     context = {
         'transactions_list': transactions_list,
     }
     return HttpResponse(template.render(context, request))
+
+# class TransactionClassView(ListView):
+    
+#     transactions_list = Transaction.objects.all()
+#     model = Transaction
+#     template_name = 'budget/transactions.html' 
+#     context_object_name: 'transactions_list'
 
 
 @login_required
@@ -94,6 +113,20 @@ def create_transaction(request):
 
     return render(request, 'budget/transaction-form.html', {'form': form})
 
+#class based form
+class CreateTransaction(CreateView):
+    model = Transaction
+    fields = ['description', 'type', 'label', 'amount', 'date']
+    template_name = 'budget/transaction-form.html'
+    success_url = reverse_lazy("transactions")
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+
+
 
 @login_required
 def update_transaction(request, id):
@@ -101,6 +134,7 @@ def update_transaction(request, id):
     form = TransactionForm(request.POST or None, instance=course)
 
     if form.is_valid():
+        user = request.user 
         form.save()
         return redirect('/budget/transactions')
 

@@ -4,7 +4,7 @@ from django.urls import path
 urlpatterns = [
     path('dashboard/', views.dashboard, name="dashboard"),
     path('transactions/', views.transactions, name="transactions"),
-    path('add-transaction/', views.create_transaction, name="create_transaction"),
+    path('add-transaction/', views.CreateTransaction.as_view(), name="create_transaction"),
     path('update-transaction/<int:id>', views.update_transaction, name="update_transaction"),
     path('delete-transaction/<int:id>', views.delete_transaction, name="delete_transaction"),
     path('budget/', views.budget, name="budget"),
