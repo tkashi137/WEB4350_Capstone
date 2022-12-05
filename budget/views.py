@@ -69,12 +69,23 @@ def dashboard(request):
     #create an array for to hold two values?  num of income and num of expenses? 
     #send array to chart
     """
+    #categories type chart
     categories = Category.objects.filter(user=user)
     category_type_sum = OrderedDict()
     for category in categories:
         if category.type not in category_type_sum:
             category_type_sum[category.type] = 0
         category_type_sum[category.type] += 1
+
+    #transaction chart
+    transactions = Transaction.objects.filter(user=user)
+    transaction_amount_sum = OrderedDict()
+    for transaction in transactions:
+        if transaction.type not in transaction_amount_sum:
+            transaction_amount_sum[transaction.type] = 0
+        transaction_amount_sum[transaction.type] += transaction.amount
+
+    print(transaction_amount_sum)
 
     template = loader.get_template('budget/dashboard.html')
     context = {

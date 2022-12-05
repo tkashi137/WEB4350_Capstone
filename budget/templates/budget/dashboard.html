@@ -17,6 +17,7 @@
     {{ sumLabels|json_script:"sumLabels"}}
     {{ numIncome|json_script:"numIncome"}}
 
+
     <div class="col py-3">
         <div class="container-fluid">
             <div class="row">
@@ -133,8 +134,8 @@
                 <div class="col-md-6">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
-                            <h2 class="fs-5 text-center">Amount Planned and Received</h2>
-                            <canvas id="myChart3"></canvas>
+                            <h2 class="fs-5 text-center">Amount Planned, Received, and Remaining</h2>
+                            <canvas id="myChart5"></canvas>
                             <script type="text/javascript">
                             var labelNames = JSON.parse(document.getElementById('label_names').textContent)
                             var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
@@ -145,7 +146,7 @@
                             console.log(amountremaining)
                             $(document).ready(function(){
                                 Chart.defaults.global.defaultFontColor = '#FFF';
-                                    var ctx = document.getElementById('myChart3').getContext('2d');
+                                    var ctx = document.getElementById('myChart5').getContext('2d');
                                     var myLabel = new Chart(ctx, {
                                         type: 'line',
                                         data: {
@@ -259,72 +260,61 @@
                 <div class="col-md-12">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
-                            <p>amount planned and remaining for each category</p>
-                            <canvas id="myChart5"></canvas>
+                            <h2 class="fs-5 text-center">Amount Planned, Received, and Remaining</h2>
+                            <canvas id="myChart3"></canvas>
                             <script type="text/javascript">
                             var labelNames = JSON.parse(document.getElementById('label_names').textContent)
                             var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
                             var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
-                            var labelCategory = JSON.parse(document.getElementById('label_category').textContent)
-    
-                            var labelCatSum = JSON.parse(document.getElementById('cat_sum').textContent)
-                            console.log(labelCatSum)
-                            var labelSums = JSON.parse(document.getElementById('sums').textContent)
-                            console.log(labelSums)
-                            var labelSumLabels = JSON.parse(document.getElementById('sumLabels').textContent)
-                            console.log(labelSumLabels)
-    
+                            var amountremaining = labelAmountPlanned.map(function(element, index){
+                                return element - labelAmountRec[index]
+                            }) 
+                            console.log(amountremaining)
                             $(document).ready(function(){
-                                var ctx = document.getElementById('myChart5').getContext('2d');
-                                var myLabel = new Chart(ctx, {
-                                    type: 'bar',
-                                    data: {
-                                        labels: labelSumLabels,
-                                        datasets: [
-                                        {
-                                            label: 'amount planned',
-                                            data: labelSums,
-                                            fill: true,
-                                            backgroundColor: [
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)',
-                                            'rgba(255, 205, 86, 0.2)',
-                                            'rgba(75, 192, 192, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(153, 102, 255, 0.2)',
-                                            'rgba(201, 203, 207, 0.2)'
-                                          ],
-                                            tension: 0.1
-                                        }, 
-                                        {% comment %} {
-                                            label: 'amount received',
-                                            data: labelSums,
-                                            fill: false,
-                                            borderColor: '#e67e22',
-                                            tension: 0.1
-                                        }, {% endcomment %}
-                                        {% comment %} {
-                                            label: 'amount remaining',
-                                            data: amountremaining,
-                                            fill: false,
-                                            borderColor: 'rgba(75, 192, 192, 1)',
-                                            tension: 0.1
-                                        }, {% endcomment %}
-                                       ]
-                                        
-                                    },
-                                    options: {
-                                        scales: {
-                                            y: {
-                                                beginAtZero: true
+                                Chart.defaults.global.defaultFontColor = '#FFF';
+                                    var ctx = document.getElementById('myChart3').getContext('2d');
+                                    var myLabel = new Chart(ctx, {
+                                        type: 'line',
+                                        data: {
+                                            labels: labelNames,
+                                            datasets: [
+                                                {
+                                                    label: 'amount planned',
+                                                    data: labelAmountPlanned,
+                                                    fill: false,
+                                                    backgroundColor: '#1abc9c',
+                                                    tension: 0.1
+                                                },
+                                                {
+                                                    label: 'amount received',
+                                                    data: labelAmountRec,
+                                                    fill: false,
+                                                    backgroundColor: '#9b59b6',
+                                                    tension: 0.1
+                                                },
+                                                {
+                                                    label: 'amount remaining',
+                                                    data: amountremaining,
+                                                    fill: false,
+                                                    backgroundColor: '#e67e22',
+                                                    tension: 0.1
+                                                },
+                                            ]
+                                        },
+                                        options: {
+                                            scales: {
+
+                                                y: {
+                                                    beginAtZero: true
+                                                },
+                                                x: {
+
+                                                },
                                             }
                                         }
-                                    
-                                        
-                                    }
-                        });
-                            });
-                        </script>
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
