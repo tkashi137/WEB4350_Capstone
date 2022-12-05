@@ -101,6 +101,7 @@ def update_transaction(request, id):
     form = TransactionForm(request.POST or None, instance=course)
 
     if form.is_valid():
+       # user = request.user ??
         form.save()
         return redirect('/budget/transactions')
 
