@@ -38,13 +38,21 @@
     {%endblock scripts%}
     
     <div class="container-fluid">
+        {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
         <div class="row flex-nowrap">
             <div
                 class="d-none d-sm-block d-sm-block d-sm-none d-md-block col-auto col-xl-2 px-sm-2 px-0 bg-dark bg-opacity-25">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    <div style="background-color: #2F8886" class="card text-white h-100 bg-opacity-25">
-                        <div class="card-body">
-                            <p class="card-text text-center">Info Here</p>
+                    <div style="background-color: #2F8886; width: 100%" class="card text-white bg-opacity-25">
+                        <div class="card-body align-items-center py-4">
+                            <h3 class="card-text text-center py-0 my-0">${{ user.profile.funds }}</h3>
+                            <p class="card-text text-center py-0 my-0"><small>Remaining Balance</small></p>
                         </div>
                     </div>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start pt-2 text-white">
@@ -94,9 +102,12 @@
                     </ul>
                 </div>
             </div>
+
             {% block body %}
             {% endblock %}
+
         </div>
+
     </div>
     <div class="d-flex justify-content-center py-3 d-block d-sm-block d-md-none">
         <ul class="nav fixed-bottom bg-dark bg-opacity-25 auto justify-content-center my-md-0 text-small">
@@ -134,14 +145,6 @@
             </li>
         </ul>
     </div>
-
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
 
     {% comment %}{% block body %}
     {% endblock %}{% endcomment %}

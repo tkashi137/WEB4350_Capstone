@@ -51,23 +51,20 @@ def dashboard(request):
     receivedSums = []
     for category in Category.objects.filter(user=user):
         cat_sum = labels.filter(category=category).aggregate(Sum('amount_planned'))
-        #sums[category.name] = cat_sum
+        # sums[category.name] = cat_sum
         sums.append(cat_sum)
         sumLabels.append(category.name)
      
     for category in Category.objects.filter(user=user):
         cat_Receivedsum = labels.filter(category=category).aggregate(Sum('amount_received'))
-        #sums[category.name] = cat_sum
+        # sums[category.name] = cat_sum
         receivedSums.append(cat_Receivedsum)
-      
-   
+
     print(sumLabels)
     print(sums)
     print(receivedSums)
-   
 
-    
-    #categories type chart
+    # categories type chart
     categories = Category.objects.filter(user=user)
     category_type_sum = OrderedDict()
     for category in categories:
@@ -75,16 +72,13 @@ def dashboard(request):
             category_type_sum[category.type] = 0
         category_type_sum[category.type] += 1
 
-    #transaction chart
+    # transaction chart
     transactions = Transaction.objects.filter(user=user)
     transaction_amount_sum = OrderedDict()
     for transaction in transactions:
         if transaction.type not in transaction_amount_sum:
             transaction_amount_sum[transaction.type] = 0
         transaction_amount_sum[transaction.type] += transaction.amount
-
-
-
 
     template = loader.get_template('budget/dashboard.html')
     context = {
@@ -133,10 +127,10 @@ def transactions(request):
 
 #     return render(request, 'budget/transaction-form.html', {'form': form})
 
-#class based form
+
+# class based form
 class CreateTransaction(CreateView):
-    model = Transaction
-    fields = ['description', 'type', 'label', 'amount', 'date']
+    form_class = TransactionForm
     template_name = 'budget/transaction-form.html'
     success_url = reverse_lazy("transactions")
 
@@ -195,8 +189,7 @@ def budget(request):
 
 #classed based create category view
 class CreateCategory(CreateView):
-    model = Category
-    fields = ['name', 'type']
+    form_class = CategoryForm
     template_name = 'budget/category-form.html'
     success_url = reverse_lazy("budget")
 
@@ -240,8 +233,7 @@ def delete_category(request, id):
 #     return render(request, 'budget/label-form.html', {'form': form})
 
 class CreateLabel(CreateView):
-    model = Label
-    fields = ['name', 'category', 'amount_planned', 'amount_received', 'due_date', 'notes']
+    form_class = LabelForm
     template_name = "budget/label-form.html"
     success_url = reverse_lazy("budget")
 

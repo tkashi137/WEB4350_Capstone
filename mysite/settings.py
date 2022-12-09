@@ -134,3 +134,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # if not logged in, redirect to login - Jami
 LOGIN_URL = 'login'
 
+USE_THOUSAND_SEPARATOR = True
+
