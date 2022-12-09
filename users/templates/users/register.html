@@ -1,20 +1,70 @@
 {% extends 'budget/base2.html' %}
 
 {% block body %}
-    <div class="container-fluid hero-2 pt-5">
-        <div class="container pb-5">
-            <div class="row height-45 align-items-center">
-                <div class="ml-5 pl-4">
-                    <h1>Create New Account</h1>
-                    <br>
-                    <form method="POST">
+<div class="py-3 mt-5 container">
+    <div class="row container-fluid bg-dark h-85 bg-opacity-25 align-items-center rounded">
+        <div class="col-md-6">
+            <div class="container col-8">
+                <h1>Welcome!</h1>
+                <p>Create an account today to begin your budgeting journey!</p>
+            </div>
+        </div>
+        <div class="col-md-6 ">
+            <div class="row mt-2">
+                <div class="container col-md-8">
+                    <h2 class="text-center">Sign Up</h2>
+                    <form method="POST" class="my-4 mx-4 text-light" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <h4>Account Info</h4>
-                        {{ form }}
-                        <button type="submit" class="btn btn-secondary btn-green btn-custom-1 px-3 mt-3">Submit</button>
+                        <div class="form-group mb-2">
+                            <label for="inputUsername">Username</label>
+                            <br>
+                            {{ form.username }}
+                        </div>
+                        <div class="row">
+                            <div class="col form-group mb-2">
+                                <label for="inputFirstName">First Name</label>
+                                <br>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col form-group mb-2">
+                                <label for="inputLastName">Last Name</label>
+                                <br>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                        <div class="col form-group mb-2">
+                            <label for="inputEmail">Email</label>
+                            <br>
+                            {{ form.email }}
+                        </div>
+                        <div class="col form-group mb-2">
+                            <label for="inputPassword1">Password</label>
+                            <br>
+                            {{ form.password1 }}
+                            <small class="form-text">
+                                Your password can’t be too similar to your other personal information. <br>
+                                Your password must contain at least 8 characters. <br>
+                                Your password can’t be a commonly used password. <br>
+                                Your password can’t be entirely numeric.</small>
+                        </div>
+                        <div class="col form-group mb-2">
+                            <label for="inputPassword2">Confirm Password</label>
+                            <br>
+                            {{ form.password2 }}
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-custom-1 px-5 text-center">Create Account</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
         </div>
-   </div>
+    </div>
+
+</div>
+
+
+
 {% endblock %}

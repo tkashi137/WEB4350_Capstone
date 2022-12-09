@@ -43,6 +43,7 @@
 
 H1, H2, H3, H4, H5, H6 {
     font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
     color: white;
 }
 
@@ -123,4 +124,7 @@ ul {
 .btn-primary:hover {
     background-color: #d66b32 !important;
     border-color: #d66b32 !important;
+}
+.h-85 {
+    min-height: 85vh;
 }

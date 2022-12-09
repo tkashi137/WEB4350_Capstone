@@ -1,22 +1,48 @@
 {% extends 'budget/base2.html' %}
 
 {% block body %}
-    <div class="container-fluid hero-2 pt-5">
-        <div class="container">
-            <div class="row height-45 align-items-center">
-                <div class="ml-5 pl-4">
-                    <h1>Login</h1>
-                    <br>
-                    <form method="POST">
+<div class="py-3 mt-5 container">
+    <div class="row container-fluid bg-dark h-85 bg-opacity-25 align-items-center rounded">
+        <div class="col-md-6">
+            <div class="container col-8">
+                <h1>Welcome Back!</h1>
+                <p>Enter your email and password to login or use the link to create a new account.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row mt-2">
+                <div class="container col-md-8 text-center">
+                    <h2>Login</h2>
+                    <form method="POST" class="my-4 mx-4 text-light" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form }}
-                        <button class="btn btn-secondary btn-green btn-custom-1 px-5" type="submit">Login</button>
+                        <div class="row">
+                            <div class="col form-group py-2">
+                                <label for="inputUsername">Username</label>
+                                {{ form.username }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col form-group py-2">
+                                <label for="inputPassword">Password</label>
+                                {{ form.password }}
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-custom-1 px-5">Login</button>
+                        <br>
+                        <p class="mt-4">
+                            Don't have an account?
+                            <br>
+                            <a href="{% url 'register' %}" class="btn btn-link text-white">Create New Account</a>
+                        </p>
                     </form>
-                    <br>
-                    <h3>Don't have an account?</h3>
-                    <a href="{% url 'register' %}" class="btn btn-secondary btn-gray btn-custom-1 px-5">Create New Account</a>
                 </div>
             </div>
         </div>
-   </div>
+    </div>
+
+</div>
+
+
+
 {% endblock %}
