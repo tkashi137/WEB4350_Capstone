@@ -44,31 +44,29 @@ def dashboard(request):
     transaction_amount = list (transactions_list.values_list('amount', flat=True))
     transaction_date = list(transactions_list.values_list('date', flat=True))
 
+    #amount planned, received, remaining by category
     labels = Label.objects.filter(user=user)
-    sums = [] # maybe you just need a list of all the sums, depends on what the graph library wants
+    sums = [] 
     sumLabels = []
+    receivedSums = []
     for category in Category.objects.filter(user=user):
         cat_sum = labels.filter(category=category).aggregate(Sum('amount_planned'))
         #sums[category.name] = cat_sum
         sums.append(cat_sum)
         sumLabels.append(category.name)
-        #put in context, load in, pass to graph
-
-    numExpense = 0
-    numIncome = 0
+     
     for category in Category.objects.filter(user=user):
-        if (category.type == "Income"):
-            numIncome += 1
-    """
-    categories_by_type = Category.objects.filter(user=user).values_list('type', flat=True)
-    print('first', categories_by_type)
-    categories_by_type = categories_by_type.annotate(type_sum=Sum('type'))
-    print(categories_by_type.query)
-    print(categories_by_type)
-    categories_by_type = list(categories_by_type)
-    #create an array for to hold two values?  num of income and num of expenses? 
-    #send array to chart
-    """
+        cat_Receivedsum = labels.filter(category=category).aggregate(Sum('amount_received'))
+        #sums[category.name] = cat_sum
+        receivedSums.append(cat_Receivedsum)
+      
+   
+    print(sumLabels)
+    print(sums)
+    print(receivedSums)
+   
+
+    
     #categories type chart
     categories = Category.objects.filter(user=user)
     category_type_sum = OrderedDict()
@@ -85,7 +83,8 @@ def dashboard(request):
             transaction_amount_sum[transaction.type] = 0
         transaction_amount_sum[transaction.type] += transaction.amount
 
-    print(transaction_amount_sum)
+
+
 
     template = loader.get_template('budget/dashboard.html')
     context = {
@@ -103,10 +102,12 @@ def dashboard(request):
         'transaction_label': transaction_label,
         'transaction_amount': transaction_amount,
         'transaction_date': transaction_date,
-       # 'cat_sum': cat_sum,
+        'categoryTypeSum': list(category_type_sum.values()),
+        'transactionAmountSum': list(transaction_amount_sum.values()),
         'sums': sums,
         'sumLabels': sumLabels,
-        'numIncome': list(category_type_sum.values()),
+        'receivedSums': receivedSums,
+
 
     }
     return HttpResponse(template.render(context, request))
@@ -115,7 +116,6 @@ def dashboard(request):
 @login_required
 def transactions(request):
     user = request.user
-    #transactions_list = Transaction.objects.all()
     transactions_list = Transaction.objects.filter(user=user) if user.is_authenticated else Transaction.objects.all()
     template = loader.get_template('budget/transactions.html')
     context = {

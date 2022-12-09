@@ -11,11 +11,12 @@
     {{ transaction_type|json_script:"transaction_type" }}
     {{ transaction_label|json_script:"transaction_label" }}
     {{ transaction_amount|json_script:"transaction_amount" }}
-    {{ transaction_date|json_script:"transaction_date" }}
-    {{ cat_sum|json_script:"cat_sum"}}
+    {{ transaction_date|json_script:"transaction_date" }}  
+    {{ categoryTypeSum|json_script:"categoryTypeSum"}}
+    {{ transactionAmountSum|json_script:"transactionAmountSum"}}
     {{ sums|json_script:"sums"}}
     {{ sumLabels|json_script:"sumLabels"}}
-    {{ numIncome|json_script:"numIncome"}}
+    {{ receivedSums|json_script:"receivedSums"}}
 
 
     <div class="col py-3">
@@ -29,38 +30,26 @@
                 <div class="col-md-6">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
-                            <h2 class="fs-5 text-center">Categories</h2>
+                            <h2 class="fs-5 text-center">Transactions: Expenses vs Income</h2>
                             <canvas id="myChart1"></canvas>
                             <script type="text/javascript">
-                                var categoryNames = JSON.parse(document.getElementById('category_names').textContent)
+                                var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
+                                var transactionAmountSum = JSON.parse(document.getElementById('transactionAmountSum').textContent)
+                                console.log('categoryTypes', categoryTypes)
+                                console.log('transactionAmountSum', transactionAmountSum)
                                 $(document).ready(function () {
                                     var ctx = document.getElementById('myChart1').getContext('2d');
                                     var myCategory = new Chart(ctx, {
-                                        type: 'doughnut',
+                                        type: 'pie',
                                         data: {
-                                            labels: categoryNames,
+                                            labels: categoryTypes,
                                             datasets: [{
-                                                label: 'category names',
-                                                data: categoryNames.map(category => 1),
+                                                label: 'Category Types',
+                                                data: transactionAmountSum,
                                                 backgroundColor: [
-                                                    '#1abc9c',
-                                                    '#16a085',
-                                                    '#2ecc71',
-                                                    '#27ae60',
-                                                    '#3498db',
-                                                    '#2980b9',
-                                                    '#9b59b6',
-                                                    '#8e44ad',
-                                                    '#f1c40f',
                                                     '#f39c12',
-                                                    '#e67e22',
-                                                    '#d35400',
-                                                    '#e74c3c',
-                                                    '#c0392b',
-                                                    '#ecf0f1',
-                                                    '#bdc3c7',
-                                                    '#95a5a6',
-                                                    '#7f8c8d',
+                                                    '#1abc9c',
+                                                    
                                                 ],
                                                 borderColor: [
                                                     '#fff',
@@ -70,7 +59,7 @@
                                         },
                                         options: {
                                             legend: {
-                                                display: false,
+
                                             },
                                             scales: {
                                                 y: {
@@ -91,9 +80,9 @@
                             <canvas id="myChart2"></canvas>
                             <script type="text/javascript">
                                 var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
-                                var numIncome = JSON.parse(document.getElementById('numIncome').textContent)
+                                var categoryTypeSum = JSON.parse(document.getElementById('categoryTypeSum').textContent)
                                 console.log('categoryTypes', categoryTypes)
-                                console.log('numIncome', numIncome)
+                                console.log('categoryTypeSum', categoryTypeSum)
                                 $(document).ready(function () {
                                     var ctx = document.getElementById('myChart2').getContext('2d');
                                     var myCategory = new Chart(ctx, {
@@ -102,7 +91,7 @@
                                             labels: categoryTypes,
                                             datasets: [{
                                                 label: 'Category Types',
-                                                data: numIncome,
+                                                data: categoryTypeSum,
                                                 backgroundColor: [
                                                     '#1abc9c',
                                                     '#f39c12',
@@ -115,7 +104,7 @@
                                         },
                                         options: {
                                             legend: {
-                                                //display: false,
+
                                             },
                                             scales: {
                                                 y: {
@@ -131,68 +120,8 @@
                 </div>
             </div>
             <div class="row mt-2">
-                <div class="col-md-6">
-                    <div class="card text-white bg-dark h-100 bg-opacity-25">
-                        <div class="card-body">
-                            <h2 class="fs-5 text-center">Amount Planned, Received, and Remaining</h2>
-                            <canvas id="myChart5"></canvas>
-                            <script type="text/javascript">
-                            var labelNames = JSON.parse(document.getElementById('label_names').textContent)
-                            var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
-                            var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
-                            var amountremaining = labelAmountPlanned.map(function(element, index){
-                                return element - labelAmountRec[index]
-                            }) 
-                            console.log(amountremaining)
-                            $(document).ready(function(){
-                                Chart.defaults.global.defaultFontColor = '#FFF';
-                                    var ctx = document.getElementById('myChart5').getContext('2d');
-                                    var myLabel = new Chart(ctx, {
-                                        type: 'line',
-                                        data: {
-                                            labels: labelNames,
-                                            datasets: [
-                                                {
-                                                    label: 'amount planned',
-                                                    data: labelAmountPlanned,
-                                                    fill: false,
-                                                    backgroundColor: '#1abc9c',
-                                                    tension: 0.1
-                                                },
-                                                {
-                                                    label: 'amount received',
-                                                    data: labelAmountRec,
-                                                    fill: false,
-                                                    backgroundColor: '#9b59b6',
-                                                    tension: 0.1
-                                                },
-                                                {
-                                                    label: 'amount remaining',
-                                                    data: amountremaining,
-                                                    fill: false,
-                                                    backgroundColor: '#e67e22',
-                                                    tension: 0.1
-                                                },
-                                            ]
-                                        },
-                                        options: {
-                                            scales: {
-
-                                                y: {
-                                                    beginAtZero: true
-                                                },
-                                                x: {
-
-                                                },
-                                            }
-                                        }
-                                    });
-                                });
-                            </script>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
+                
+                <div class="col-md-12">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
                             <h2 class="fs-5 text-center">Transactions</h2>
@@ -261,18 +190,20 @@
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">
                             <h2 class="fs-5 text-center">Amount Planned, Received, and Remaining</h2>
-                            <canvas id="myChart3"></canvas>
+                            <canvas id="myChart5"></canvas>
                             <script type="text/javascript">
                             var labelNames = JSON.parse(document.getElementById('label_names').textContent)
                             var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
+                            console.log('labelamount received', labelAmountRec)
                             var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
+                            console.log('labelamount planned', labelAmountPlanned)
                             var amountremaining = labelAmountPlanned.map(function(element, index){
                                 return element - labelAmountRec[index]
                             }) 
                             console.log(amountremaining)
                             $(document).ready(function(){
                                 Chart.defaults.global.defaultFontColor = '#FFF';
-                                    var ctx = document.getElementById('myChart3').getContext('2d');
+                                    var ctx = document.getElementById('myChart5').getContext('2d');
                                     var myLabel = new Chart(ctx, {
                                         type: 'line',
                                         data: {
