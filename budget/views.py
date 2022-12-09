@@ -277,7 +277,8 @@ def reports(request):
     user = request.user
     categories_list = Category.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     category_names = list(categories_list.values_list('name', flat=True))
-    category_types = list(categories_list.values_list('type', flat=True))
+    category_types = [x[0] for x in Category.CATEGORY_TYPE_CHOICES]
+    # list(categories_list.values_list('type', flat=True))
     labels_list = Label.objects.filter(user=user) if user.is_authenticated else Label.objects.all()
     label_names = list(labels_list.values_list('name', flat=True))
     label_category = list(labels_list.values_list('category', flat=True))
@@ -287,13 +288,56 @@ def reports(request):
     transaction_description = list(transactions_list.values_list('description', flat=True))
     transaction_type = list(transactions_list.values_list('type', flat=True))
     transaction_label = list(transactions_list.values_list('label', flat=True))
-    transaction_amount = list(transactions_list.values_list('amount', flat=True))
+    transaction_amount = list (transactions_list.values_list('amount', flat=True))
     transaction_date = list(transactions_list.values_list('date', flat=True))
+
+    #amount planned, received, remaining by category
+    labels = Label.objects.filter(user=user)
+    sums = [] 
+    sumLabels = []
+    receivedSums = []
+    for category in Category.objects.filter(user=user):
+        cat_sum = labels.filter(category=category).aggregate(Sum('amount_planned'))
+        #sums[category.name] = cat_sum
+        sums.append(cat_sum)
+        sumLabels.append(category.name)
+     
+    for category in Category.objects.filter(user=user):
+        cat_Receivedsum = labels.filter(category=category).aggregate(Sum('amount_received'))
+        #sums[category.name] = cat_sum
+        receivedSums.append(cat_Receivedsum)
+      
+   
+    print(sumLabels)
+    print(sums)
+    print(receivedSums)
+   
+
+    
+    #categories type chart
+    categories = Category.objects.filter(user=user)
+    category_type_sum = OrderedDict()
+    for category in categories:
+        if category.type not in category_type_sum:
+            category_type_sum[category.type] = 0
+        category_type_sum[category.type] += 1
+
+    #transaction chart
+    transactions = Transaction.objects.filter(user=user)
+    transaction_amount_sum = OrderedDict()
+    for transaction in transactions:
+        if transaction.type not in transaction_amount_sum:
+            transaction_amount_sum[transaction.type] = 0
+        transaction_amount_sum[transaction.type] += transaction.amount
+
+
+
+
     template = loader.get_template('budget/reports.html')
     context = {
         'categories_list': categories_list,
         'category_names': category_names,
-        'category_types': category_types,
+        'category_types': list(category_type_sum.keys()),
         'labels_list': labels_list,
         'label_names': label_names,
         'label_category': label_category,
@@ -305,6 +349,14 @@ def reports(request):
         'transaction_label': transaction_label,
         'transaction_amount': transaction_amount,
         'transaction_date': transaction_date,
+        'categoryTypeSum': list(category_type_sum.values()),
+        'transactionAmountSum': list(transaction_amount_sum.values()),
+        'sums': sums,
+        'sumLabels': sumLabels,
+        'receivedSums': receivedSums,
+
+
+    
     }
     return HttpResponse(template.render(context, request))
 

@@ -1,21 +1,22 @@
 {% extends 'budget/base.html' %}
 
 {% block body %}
-{{ category_names|json_script:"category_names" }}
-{{ category_types|json_script:"category_types" }}
-{{ label_names|json_script:"label_names" }}
-{{ label_category|json_script:"label_category" }}
-{{ label_amountRec|json_script:"label_amountRec" }}
-{{ label_amountPlanned|json_script:"label_amountPlanned" }}
-{{ transaction_description|json_script:"transaction_description" }}
-{{ transaction_type|json_script:"transaction_type" }}
-{{ transaction_label|json_script:"transaction_label" }}
-{{ transaction_amount|json_script:"transaction_amount" }}
-{{ transaction_date|json_script:"transaction_date" }}
-{{ cat_sum|json_script:"cat_sum"}}
-{{ sums|json_script:"sums"}}
-{{ sumLabels|json_script:"sumLabels"}}
-{{ numIncome|json_script:"numIncome"}}
+    {{ category_names|json_script:"category_names" }}
+    {{ category_types|json_script:"category_types" }}
+    {{ label_names|json_script:"label_names" }}
+    {{ label_category|json_script:"label_category" }}
+    {{ label_amountRec|json_script:"label_amountRec" }}
+    {{ label_amountPlanned|json_script:"label_amountPlanned" }}
+    {{ transaction_description|json_script:"transaction_description" }}
+    {{ transaction_type|json_script:"transaction_type" }}
+    {{ transaction_label|json_script:"transaction_label" }}
+    {{ transaction_amount|json_script:"transaction_amount" }}
+    {{ transaction_date|json_script:"transaction_date" }}  
+    {{ categoryTypeSum|json_script:"categoryTypeSum"}}
+    {{ transactionAmountSum|json_script:"transactionAmountSum"}}
+    {{ sums|json_script:"sums"}}
+    {{ sumLabels|json_script:"sumLabels"}}
+    {{ receivedSums|json_script:"receivedSums"}}
 
     <div class="col py-3">
         <div class="container-fluid">
@@ -35,12 +36,7 @@
                                             aria-controls="overview-tab-pane" aria-selected="true">Budget Overview
                                     </button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link text-white" id="monthly-tab" data-bs-toggle="tab"
-                                            data-bs-target="#monthly-tab-pane" type="button" role="tab"
-                                            aria-controls="monthly-tab-pane" aria-selected="false">Monthly Spending
-                                    </button>
-                                </li>
+                               
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link text-white" id="categories-tab" data-bs-toggle="tab"
                                             data-bs-target="#categories-tab-pane" type="button" role="tab"
@@ -50,117 +46,64 @@
                             </ul>
                             <div class="tab-content" id="reportsTabContent">
                                 <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel"
-                                     aria-labelledby="overview-tab" tabindex="0">Budget Overview charts here - under construction!!
+                                     aria-labelledby="overview-tab" tabindex="0">
                                      <div class="row mt-2">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="card text-white bg-dark h-100 bg-opacity-25">
                                                 <div class="card-body">
-                                                    <h2 class="fs-5 text-center">Categories</h2>
-                                                    <canvas id="myChart1"></canvas>
+                                                    <h2 class="fs-5 text-center">Transactions</h2>
+                                                    <canvas id="myChart4"></canvas>
                                                     <script type="text/javascript">
-                                                        var categoryNames = JSON.parse(document.getElementById('category_names').textContent)
+                                                        var transactionDescription = JSON.parse(document.getElementById('transaction_description').textContent)
+                                                        var transactionType = JSON.parse(document.getElementById('transaction_type').textContent)
+                                                        var transactionLabel = JSON.parse(document.getElementById('transaction_label').textContent)
+                                                        var transactionAmount = JSON.parse(document.getElementById('transaction_amount').textContent)
+                                                        console.log(transactionAmount)
+                                                        var transactionDate = JSON.parse(document.getElementById('transaction_date').textContent)
+                                                        console.log(transactionDate)
                                                         $(document).ready(function () {
-                                                            var ctx = document.getElementById('myChart1').getContext('2d');
-                                                            var myCategory = new Chart(ctx, {
-                                                                type: 'doughnut',
+                                                            var ctx = document.getElementById('myChart4').getContext('2d');
+                                                            var myLabel = new Chart(ctx, {
+                                                                type: 'bar',
                                                                 data: {
-                                                                    labels: categoryNames,
-                                                                    datasets: [{
-                                                                        label: 'category names',
-                                                                        data: categoryNames.map(category => 1),
-                                                                        backgroundColor: [
-                                                                            '#1abc9c',
-                                                                            '#16a085',
-                                                                            '#2ecc71',
-                                                                            '#27ae60',
-                                                                            '#3498db',
-                                                                            '#2980b9',
-                                                                            '#9b59b6',
-                                                                            '#8e44ad',
-                                                                            '#f1c40f',
-                                                                            '#f39c12',
-                                                                            '#e67e22',
-                                                                            '#d35400',
-                                                                            '#e74c3c',
-                                                                            '#c0392b',
-                                                                            '#ecf0f1',
-                                                                            '#bdc3c7',
-                                                                            '#95a5a6',
-                                                                            '#7f8c8d',
-                                                                        ],
-                                                                        borderColor: [
-                                                                            '#fff',
-                                                                        ],
-                                                                        borderWidth: 1
-                                                                    }]
+                                                                    labels: transactionDescription,
+                                                                    datasets: [
+                                                                        {
+                                                                            label: 'amount received',
+                                                                            data: transactionAmount,
+                                                                            backgroundColor: [
+                                                                                '#1abc9c',
+                                                                                '#16a085',
+                                                                                '#2ecc71',
+                                                                                '#27ae60',
+                                                                                '#3498db',
+                                                                                '#2980b9',
+                                                                                '#9b59b6',
+                                                                                '#8e44ad',
+                                                                                '#f1c40f',
+                                                                                '#f39c12',
+                                                                                '#e67e22',
+                                                                                '#d35400',
+                                                                                '#e74c3c',
+                                                                                '#c0392b',
+                                                                                '#ecf0f1',
+                                                                                '#bdc3c7',
+                                                                                '#95a5a6',
+                                                                                '#7f8c8d',
+                                                                            ],
+                                                                        }]
                                                                 },
                                                                 options: {
-                                                                    legend: {
-                                                                        display: false,
-                                                                    },
                                                                     scales: {
                                                                         y: {
                                                                             beginAtZero: true
-                                                                        }
-                                                                    },
-                                                                }
-                                                            });
-                                                        });
-                                                    </script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="card text-white bg-dark h-100 bg-opacity-25">
-                                                <div class="card-body">
-                                                    <h2 class="fs-5 text-center">Category Types</h2>
-                                                    <canvas id="myChart2"></canvas>
-                                                    <script type="text/javascript">
-                                                        var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
-                                                        $(document).ready(function () {
-                                                            var ctx = document.getElementById('myChart2').getContext('2d');
-                                                            var myCategory = new Chart(ctx, {
-                                                                type: 'doughnut',
-                                                                data: {
-                                                                    labels: categoryTypes,
-                                                                    datasets: [{
-                                                                        label: 'Category Types',
-                                                                        data: categoryTypes.map(category => 1),
-                                                                        backgroundColor: [
-                                                                            '#1abc9c',
-                                                                            '#16a085',
-                                                                            '#2ecc71',
-                                                                            '#27ae60',
-                                                                            '#3498db',
-                                                                            '#2980b9',
-                                                                            '#9b59b6',
-                                                                            '#8e44ad',
-                                                                            '#f1c40f',
-                                                                            '#f39c12',
-                                                                            '#e67e22',
-                                                                            '#d35400',
-                                                                            '#e74c3c',
-                                                                            '#c0392b',
-                                                                            '#ecf0f1',
-                                                                            '#bdc3c7',
-                                                                            '#95a5a6',
-                                                                            '#7f8c8d',
-                                                                        ],
-                                                                        borderColor: [
-                                                                            '#fff',
-                                                                        ],
-                                                                        borderWidth: 1
-                                                                    }]
-                                                                },
-                                                                options: {
-                                                                    legend: {
-                                                                        display: false,
-                                                                    },
-                                                                    scales: {
-                                                                        y: {
-                                                                            beginAtZero: true
-                                                                        }
-                                                                    },
+                                                                        },
+                                                                        x: {
+                                                                            ticks: {
+                                                                                maxTicksLimit: 2
+                                                                            }
+                                                                        },
+                                                                    }
                                                                 }
                                                             });
                                                         });
@@ -169,12 +112,72 @@
                                             </div>
                                         </div>
                                     </div>
-                                     
-                                        
-                                </div>
-                                <div class="tab-pane fade" id="monthly-tab-pane" role="tabpanel"
-                                     aria-labelledby="monthly-tab" tabindex="0">Monthly Spending charts here
-                                </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <div class="card text-white bg-dark h-100 bg-opacity-25">
+                                                <div class="card-body">
+                                                    <h2 class="fs-5 text-center">Amount Planned, Received, and Remaining</h2>
+                                                    <canvas id="myChart5"></canvas>
+                                                    <script type="text/javascript">
+                                                    var labelNames = JSON.parse(document.getElementById('label_names').textContent)
+                                                    var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
+                                                    console.log('labelamount received', labelAmountRec)
+                                                    var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
+                                                    console.log('labelamount planned', labelAmountPlanned)
+                                                    var amountremaining = labelAmountPlanned.map(function(element, index){
+                                                        return element - labelAmountRec[index]
+                                                    }) 
+                                                    console.log(amountremaining)
+                                                    $(document).ready(function(){
+                                                        Chart.defaults.global.defaultFontColor = '#FFF';
+                                                            var ctx = document.getElementById('myChart5').getContext('2d');
+                                                            var myLabel = new Chart(ctx, {
+                                                                type: 'line',
+                                                                data: {
+                                                                    labels: labelNames,
+                                                                    datasets: [
+                                                                        {
+                                                                            label: 'amount planned',
+                                                                            data: labelAmountPlanned,
+                                                                            fill: false,
+                                                                            backgroundColor: '#1abc9c',
+                                                                            tension: 0.1
+                                                                        },
+                                                                        {
+                                                                            label: 'amount received',
+                                                                            data: labelAmountRec,
+                                                                            fill: false,
+                                                                            backgroundColor: '#9b59b6',
+                                                                            tension: 0.1
+                                                                        },
+                                                                        {
+                                                                            label: 'amount remaining',
+                                                                            data: amountremaining,
+                                                                            fill: false,
+                                                                            backgroundColor: '#e67e22',
+                                                                            tension: 0.1
+                                                                        },
+                                                                    ]
+                                                                },
+                                                                options: {
+                                                                    scales: {
+                        
+                                                                        y: {
+                                                                            beginAtZero: true
+                                                                        },
+                                                                        x: {
+                        
+                                                                        },
+                                                                    }
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>       
+                                </div>    
                                 <div class="tab-pane fade" id="categories-tab-pane" role="tabpanel"
                                      aria-labelledby="categories-tab" tabindex="0">Spending Categories charts here
                                      <div class="row mt-2">
@@ -240,21 +243,21 @@
                                             <div class="card text-white bg-dark h-100 bg-opacity-25">
                                                 <div class="card-body">
                                                     <h2 class="fs-5 text-center">Category Types</h2>
-                                                    <canvas id="myChartCategories2"></canvas>
+                                                    <canvas id="myChart2"></canvas>
                                                     <script type="text/javascript">
                                                         var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
-                                                        var numIncome = JSON.parse(document.getElementById('numIncome').textContent)
+                                                        var categoryTypeSum = JSON.parse(document.getElementById('categoryTypeSum').textContent)
                                                         console.log('categoryTypes', categoryTypes)
-                                                        console.log('numIncome', numIncome)
+                                                        console.log('categoryTypeSum', categoryTypeSum)
                                                         $(document).ready(function () {
-                                                            var ctx = document.getElementById('myChartCategories2').getContext('2d');
+                                                            var ctx = document.getElementById('myChart2').getContext('2d');
                                                             var myCategory = new Chart(ctx, {
                                                                 type: 'doughnut',
                                                                 data: {
                                                                     labels: categoryTypes,
                                                                     datasets: [{
                                                                         label: 'Category Types',
-                                                                        data: numIncome,
+                                                                        data: categoryTypeSum,
                                                                         backgroundColor: [
                                                                             '#1abc9c',
                                                                             '#f39c12',
@@ -267,7 +270,7 @@
                                                                 },
                                                                 options: {
                                                                     legend: {
-                                                                        //display: false,
+                        
                                                                     },
                                                                     scales: {
                                                                         y: {
