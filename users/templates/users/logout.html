@@ -1,15 +1,18 @@
 {% extends 'budget/base2.html' %}
 
 {% block body %}
-    <div class="container-fluid hero-2 pt-5">
-        <div class="container">
-            <div class="row height-45 align-items-center">
-                <div class="ml-5 pl-4">
-                    <h3>Logout Successful</h3>
-                    <h1>You have been logged out!</h1>
-                    <a href="{% url 'index' %}" class="btn btn-success btn-green py-4 btn-custom-1 w-25">Return to Homepage</a>
+    <div class="py-3 mt-5 container">
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <div class="card text-white bg-dark h-100 bg-opacity-25">
+                    <div class="card-body">
+                        <h1>Logout Successful</h1>
+                        <p class="fs4">You have been logged out!</p>
+                        <a href="{% url 'index' %}" class="btn btn-home text-white">Return to
+                            Homepage</a>
+                    </div>
                 </div>
             </div>
         </div>
-   </div>
+    </div>
 {% endblock %}
