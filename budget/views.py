@@ -1,15 +1,16 @@
 from collections import OrderedDict
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from django.db.models import Sum 
 from datetime import date
+from decimal import Decimal
 
 # from rest_framework import viewsets
 # from .serializers import CategorySerializer, LabelSerializer, TransactionSerializer
 from .models import Category, Label, Transaction
+from users.models import Profile, User
 from django.contrib.auth.decorators import login_required
 from .forms import CategoryForm, LabelForm, TransactionForm
 from django.views.generic.edit import CreateView
@@ -135,17 +136,30 @@ class CreateTransaction(CreateView):
     success_url = reverse_lazy("transactions")
 
     def form_valid(self, form):
+        user = self.request.user
+        label_name = form.cleaned_data['label']
+        received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+        amount_received = list(received.values())[0]
+        form_amount = form.cleaned_data['amount']
+        amount = form_amount + amount_received
+        Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
         form.instance.user = self.request.user
         return super().form_valid(form)
 
 
 @login_required
 def update_transaction(request, id):
-    course = Transaction.objects.get(id=id)
-    form = TransactionForm(request.POST or None, instance=course)
+    transaction = Transaction.objects.get(id=id)
+    form = TransactionForm(request.POST or None, instance=transaction)
 
     if form.is_valid():
-        user = request.user 
+        user = request.user
+        label_name = form.cleaned_data['label']
+        received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+        amount_received = list(received.values())[0]
+        form_amount = form.cleaned_data['amount']
+        amount = form_amount + amount_received
+        Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
         form.save()
         return redirect('/budget/transactions')
 
@@ -157,6 +171,13 @@ def delete_transaction(request, id):
     transaction = Transaction.objects.get(id=id)
 
     if request.method == 'POST':
+        user = request.user
+        label_name = transaction.label
+        received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+        amount_received = list(received.values())[0]
+        delete_amount = transaction.amount
+        amount = amount_received - delete_amount
+        Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
         transaction.delete()
         return redirect('/budget/transactions')
 
