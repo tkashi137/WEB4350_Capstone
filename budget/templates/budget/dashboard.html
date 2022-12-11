@@ -27,6 +27,21 @@
                 </div>
             </div>
             <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="card text-white bg-dark bg-opacity-25">
+                        <div class="card-body">
+                            <h2 class="fs-5 text-center">Daily Spending Limit</h2>
+                            <hr class="text-white">
+                            <div class="row">
+{#                                <p class="col">Current Date: {{ now }} </p>#}
+{#                                <p class="col">days left this month: {{ days_left }}</p>#}
+                                <h3 class="col text-center">${{ spending_limit|floatformat:2 }} per day</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
                 <div class="col-md-6">
                     <div class="card text-white bg-dark h-100 bg-opacity-25">
                         <div class="card-body">

@@ -16,6 +16,8 @@ from .forms import CategoryForm, LabelForm, TransactionForm
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
+import calendar
+import datetime
 
 
 # Create your views here.
@@ -44,6 +46,14 @@ def dashboard(request):
     transaction_label = list(transactions_list.values_list('label', flat=True))
     transaction_amount = list (transactions_list.values_list('amount', flat=True))
     transaction_date = list(transactions_list.values_list('date', flat=True))
+
+    # daily spending limit
+    now = datetime.datetime.now()
+    month_days = calendar.monthrange(now.year, now.month)[1]
+    days_left = month_days - now.day
+    funds_list = Profile.objects.filter(user=user).values('funds').get()
+    funds = list(funds_list.values())[0]
+    spending_limit = funds / days_left
 
     #amount planned, received, remaining by category
     labels = Label.objects.filter(user=user)
@@ -102,8 +112,9 @@ def dashboard(request):
         'sums': sums,
         'sumLabels': sumLabels,
         'receivedSums': receivedSums,
-
-
+        'now': now,
+        'days_left': days_left,
+        'spending_limit': spending_limit
     }
     return HttpResponse(template.render(context, request))
 

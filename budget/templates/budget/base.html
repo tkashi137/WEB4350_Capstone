@@ -53,10 +53,13 @@
                 class="d-none d-sm-block d-sm-block d-sm-none d-md-block col-auto col-xl-2 px-sm-2 px-0 bg-dark bg-opacity-25">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <div style="background-color: #2F8886; width: 100%" class="card text-white bg-opacity-25">
-                    <div class="card-body align-items-center py-4">
-                        <h3 class="card-text text-center py-0 my-0">${{ user.profile.funds }}</h3>
-                        <p class="card-text text-center py-0 my-0"><small>Remaining Balance</small></p>
-                    </div>
+                    <a {% if request.resolver_match.url_name == 'profile' %}class="nav-link active"{% endif %}
+                           href="{% url 'profile' %}" class="nav-link">
+                       <div class="card-body align-items-center py-4">
+                            <h3 class="card-text text-center py-0 my-0">${{ user.profile.funds }}</h3>
+                            <p class="card-text text-center py-0 my-0"><small>Remaining Balance</small></p>
+                        </div>
+                    </a>
                 </div>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start pt-2 text-white">
                     <li class="nav-item">

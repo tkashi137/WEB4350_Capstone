@@ -16,26 +16,40 @@
                     </div>
                     <div class="col-md-10">
                         <div class="card-body">
+                            <h4>Account Info:</h4>
                             <p>username: {{ user.username }}</p>
                                 <p>first name: {{ user.first_name }}</p>
                                 <p>last name: {{ user.last_name }}</p>
                                 <p>email: {{ user.email }}</p>
-                                <p>funds: ${{ user.profile.funds }}</p>
+
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <form method="POST" class="my-4 mx-4 text-light col">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-4 form-group py-1">
-                                <label for="name">Edit Funds</label>
-                                {{ form.funds }}
+            </div>
+            <div class="card mb-3 bg-dark bg-opacity-25">
+                <div class="row card-body">
+                    <h4>Balance Info:</h4>
+                    <hr class="text-white">
+                    <div class="row no-gutters col-md-8">
+                        <p class="col">Current Date: {{ now }} </p>
+                        <p class="col">Days Left This Month: {{ days_left }}</p>
+                    </div>
+                    <div class="row no-gutters col-md-8">
+                        <p class="col">Current Funds: ${{ user.profile.funds }}</p>
+                        <p class="col">Daily Spending Limit: ${{ spending_limit|floatformat:2 }} per day</p>
+                    </div>
+                    <div class="row col-md-10">
+                        <form method="POST" class="mb-4 text-light col">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-4 form-group py-1">
+                                    <label for="name">Edit Funds</label>
+                                    {{ form.funds }}
+                                </div>
                             </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-custom-1 px-5">Submit</button>
-                    </form>
+                            <button type="submit" class="btn btn-primary btn-custom-1 px-5">Update</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
