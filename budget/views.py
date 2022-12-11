@@ -71,10 +71,6 @@ def dashboard(request):
         # sums[category.name] = cat_sum
         receivedSums.append(cat_Receivedsum)
 
-    print(sumLabels)
-    print(sums)
-    print(receivedSums)
-
     # categories type chart
     categories = Category.objects.filter(user=user)
     category_type_sum = OrderedDict()
@@ -388,12 +384,6 @@ def reports(request):
         #sums[category.name] = cat_sum
         receivedSums.append(cat_Receivedsum)
       
-   
-    print(sumLabels)
-    print(sums)
-    print(receivedSums)
-   
-
     
     #categories type chart
     categories = Category.objects.filter(user=user)

@@ -48,8 +48,6 @@
                             <script type="text/javascript">
                                 var categoryTypes = JSON.parse(document.getElementById('category_types').textContent)
                                 var transactionAmountSum = JSON.parse(document.getElementById('transactionAmountSum').textContent)
-                                console.log('categoryTypes', categoryTypes)
-                                console.log('transactionAmountSum', transactionAmountSum)
                                 $(document).ready(function () {
                                     var ctx = document.getElementById('myChart1').getContext('2d');
                                     var myCategory = new Chart(ctx, {
@@ -136,9 +134,7 @@
                                 var transactionType = JSON.parse(document.getElementById('transaction_type').textContent)
                                 var transactionLabel = JSON.parse(document.getElementById('transaction_label').textContent)
                                 var transactionAmount = JSON.parse(document.getElementById('transaction_amount').textContent)
-                                console.log(transactionAmount)
                                 var transactionDate = JSON.parse(document.getElementById('transaction_date').textContent)
-                                console.log(transactionDate)
                                 $(document).ready(function () {
                                     var ctx = document.getElementById('myChart4').getContext('2d');
                                     var myLabel = new Chart(ctx, {
@@ -210,13 +206,10 @@
                             <script type="text/javascript">
                                 var labelNames = JSON.parse(document.getElementById('label_names').textContent)
                                 var labelAmountRec = JSON.parse(document.getElementById('label_amountRec').textContent)
-                                console.log('labelamount received', labelAmountRec)
                                 var labelAmountPlanned = JSON.parse(document.getElementById('label_amountPlanned').textContent)
-                                console.log('labelamount planned', labelAmountPlanned)
                                 var amountremaining = labelAmountPlanned.map(function (element, index) {
                                     return element - labelAmountRec[index]
                                 })
-                                console.log(amountremaining)
                                 $(document).ready(function () {
                                     Chart.defaults.global.defaultFontColor = '#FFF';
                                     var ctx = document.getElementById('myChart5').getContext('2d');
