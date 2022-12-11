@@ -118,16 +118,6 @@ def transactions(request):
     }
     return HttpResponse(template.render(context, request))
 
-# @login_required
-# def create_transaction(request):
-#     form = TransactionForm(request.POST or None)
-
-#     if form.is_valid():
-#         form.save()
-#         return redirect('/budget/transactions')
-
-#     return render(request, 'budget/transaction-form.html', {'form': form})
-
 
 # class based form
 class CreateTransaction(CreateView):
@@ -136,32 +126,89 @@ class CreateTransaction(CreateView):
     success_url = reverse_lazy("transactions")
 
     def form_valid(self, form):
-        user = self.request.user
-        label_name = form.cleaned_data['label']
-        received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
-        amount_received = list(received.values())[0]
-        form_amount = form.cleaned_data['amount']
-        amount = form_amount + amount_received
-        Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+        transaction_type = form.cleaned_data['type']
+        if transaction_type == 'EXPENSE':
+            user = self.request.user
+            label_name = form.cleaned_data['label']
+            received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+            amount_received = list(received.values())[0]
+            form_amount = form.cleaned_data['amount']
+            amount = form_amount + amount_received
+            Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
+            funds_list = Profile.objects.filter(user=user).values('funds').get()
+            funds = list(funds_list.values())[0]
+            balance = funds - form_amount
+            Profile.objects.filter(user=user).update(funds=balance)
+            form.instance.user = self.request.user
+            return super().form_valid(form)
+        elif transaction_type == 'INCOME':
+            user = self.request.user
+            label_name = form.cleaned_data['label']
+            received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+            amount_received = list(received.values())[0]
+            form_amount = form.cleaned_data['amount']
+            amount = form_amount + amount_received
+            Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
+            funds_list = Profile.objects.filter(user=user).values('funds').get()
+            funds = list(funds_list.values())[0]
+            balance = funds + form_amount
+            Profile.objects.filter(user=user).update(funds=balance)
+            form.instance.user = self.request.user
+            return super().form_valid(form)
 
 
 @login_required
 def update_transaction(request, id):
     transaction = Transaction.objects.get(id=id)
     form = TransactionForm(request.POST or None, instance=transaction)
+    og_amount = transaction.amount
 
     if form.is_valid():
-        user = request.user
-        label_name = form.cleaned_data['label']
-        received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
-        amount_received = list(received.values())[0]
-        form_amount = form.cleaned_data['amount']
-        amount = form_amount + amount_received
-        Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
-        form.save()
-        return redirect('/budget/transactions')
+        transaction_type = form.cleaned_data['type']
+        if transaction_type == 'EXPENSE':
+            user = request.user
+            label_name = form.cleaned_data['label']
+            received1 = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+            amount_received1 = list(received1.values())[0]
+            refund_amount = amount_received1 + og_amount
+            Label.objects.filter(user=user, name=label_name).update(amount_received=refund_amount)
+            funds_list1 = Profile.objects.filter(user=user).values('funds').get()
+            funds = list(funds_list1.values())[0]
+            refund_balance = funds + og_amount
+            Profile.objects.filter(user=user).update(funds=refund_balance)
+            received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+            amount_received = list(received.values())[0]
+            form_amount = form.cleaned_data['amount']
+            amount = form_amount + amount_received
+            Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
+            funds_list = Profile.objects.filter(user=user).values('funds').get()
+            funds = list(funds_list.values())[0]
+            balance = funds - form_amount
+            Profile.objects.filter(user=user).update(funds=balance)
+            form.save()
+            return redirect('/budget/transactions')
+        elif transaction_type == 'INCOME':
+            user = request.user
+            label_name = form.cleaned_data['label']
+            received1 = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+            amount_received1 = list(received1.values())[0]
+            refund_amount = amount_received1 - og_amount
+            Label.objects.filter(user=user, name=label_name).update(amount_received=refund_amount)
+            funds_list1 = Profile.objects.filter(user=user).values('funds').get()
+            funds = list(funds_list1.values())[0]
+            refund_balance = funds - og_amount
+            Profile.objects.filter(user=user).update(funds=refund_balance)
+            received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+            amount_received = list(received.values())[0]
+            form_amount = form.cleaned_data['amount']
+            amount = form_amount + amount_received
+            Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
+            funds_list = Profile.objects.filter(user=user).values('funds').get()
+            funds = list(funds_list.values())[0]
+            balance = funds + form_amount
+            Profile.objects.filter(user=user).update(funds=balance)
+            form.save()
+            return redirect('/budget/transactions')
 
     return render(request, 'budget/transaction-form.html', {'form': form})
 
@@ -171,15 +218,35 @@ def delete_transaction(request, id):
     transaction = Transaction.objects.get(id=id)
 
     if request.method == 'POST':
-        user = request.user
-        label_name = transaction.label
-        received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
-        amount_received = list(received.values())[0]
-        delete_amount = transaction.amount
-        amount = amount_received - delete_amount
-        Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
-        transaction.delete()
-        return redirect('/budget/transactions')
+        transaction_type = transaction.type
+        if transaction_type == 'INCOME':
+            user = request.user
+            label_name = transaction.label
+            received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+            amount_received = list(received.values())[0]
+            delete_amount = transaction.amount
+            amount = amount_received - delete_amount
+            Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
+            funds_list = Profile.objects.filter(user=user).values('funds').get()
+            funds = list(funds_list.values())[0]
+            balance = funds - delete_amount
+            Profile.objects.filter(user=user).update(funds=balance)
+            transaction.delete()
+            return redirect('/budget/transactions')
+        elif transaction_type == 'EXPENSE':
+            user = request.user
+            label_name = transaction.label
+            received = Label.objects.filter(user=user, name=label_name).values('amount_received').get()
+            amount_received = list(received.values())[0]
+            delete_amount = transaction.amount
+            amount = amount_received + delete_amount
+            Label.objects.filter(user=user, name=label_name).update(amount_received=amount)
+            funds_list = Profile.objects.filter(user=user).values('funds').get()
+            funds = list(funds_list.values())[0]
+            balance = funds + delete_amount
+            Profile.objects.filter(user=user).update(funds=balance)
+            transaction.delete()
+            return redirect('/budget/transactions')
 
     return render(request, 'budget/transaction-delete.html', {'transaction': transaction})
 
@@ -198,17 +265,7 @@ def budget(request):
     return HttpResponse(template.render(context, request))
 
 
-# @login_required
-# def create_category(request):
-#     form = CategoryForm(request.POST or None)
-
-#     if form.is_valid():
-#         form.save()
-#         return redirect('/budget/budget')
-
-#     return render(request, 'budget/category-form.html', {'form': form})
-
-#classed based create category view
+# class based create category view
 class CreateCategory(CreateView):
     form_class = CategoryForm
     template_name = 'budget/category-form.html'
