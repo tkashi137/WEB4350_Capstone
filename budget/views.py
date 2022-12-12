@@ -71,7 +71,7 @@ def dashboard(request):
         # sums[category.name] = cat_sum
         receivedSums.append(cat_Receivedsum)
 
-    # categories type chart
+    # categories type charts
     categories = Category.objects.filter(user=user)
     category_type_sum = OrderedDict()
     for category in categories:
