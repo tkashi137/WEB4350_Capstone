@@ -54,8 +54,8 @@
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <div style="background-color: #2F8886; width: 100%" class="card text-white bg-opacity-25">
                     <a {% if request.resolver_match.url_name == 'profile' %}class="nav-link active"{% endif %}
-                           href="{% url 'profile' %}" class="nav-link">
-                       <div class="card-body align-items-center py-4">
+                       href="{% url 'profile' %}" class="nav-link">
+                        <div class="card-body align-items-center py-4">
                             <h3 class="card-text text-center py-0 my-0">${{ user.profile.funds }}</h3>
                             <p class="card-text text-center py-0 my-0"><small>Remaining Balance</small></p>
                         </div>
@@ -141,13 +141,6 @@
             </a>
         </li>
         <li>
-            <a {% if request.resolver_match.url_name == 'url' %}class="nav-link mobile-active text-white text-center"{% endif %}
-               href="{% comment %}{% url 'category-form' %}{% endcomment %}"
-               class="nav-link text-white text-center">
-                <i class="bi bi-diagram-2 text-white"></i><span class="text-white"><br>Categories</span>
-            </a>
-        </li>
-        <li>
             <a {% if request.resolver_match.url_name == 'reports' %}class="nav-link mobile-active text-white text-center"{% endif %}
                href="{% url 'reports' %}" class="nav-link text-white text-center">
                 <i class="bi bi-graph-up-arrow text-white"></i> <span class="text-white"><br>Reports</span>
@@ -159,6 +152,21 @@
                 <i class="bi bi-person text-white"></i><span class="text-white"><br>User
                         Profile</span>
             </a>
+        </li>
+        <li>
+            {% if user.is_authenticated %}
+                <a {% if request.resolver_match.url_name == 'logout' %}class="nav-link mobile-active text-white text-center"{% endif %}
+                   href="{% url 'logout' %}"
+                   class="nav-link text-white text-center">
+                    <i class="bi bi-diagram-2 text-white"></i><span class="text-white"><br>Logout</span>
+                </a>
+            {% else %}
+                <a {% if request.resolver_match.url_name == 'login' %}class="nav-link mobile-active text-white text-center"{% endif %}
+                   href="{% url 'login' %}"
+                   class="nav-link text-white text-center">
+                    <i class="bi bi-diagram-2 text-white"></i><span class="text-white"><br>Login</span>
+                </a>
+            {% endif %}
         </li>
     </ul>
 </div>
